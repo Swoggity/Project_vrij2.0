@@ -12,7 +12,7 @@ public class EnemyManager2 : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        Instantiate(fastPrefab, new Vector3(5, 0, 0), Quaternion.identity);
+        Instantiate(fastPrefab, new Vector3(10, 0, 0), Quaternion.identity);
         Instantiate(strongPrefab, new Vector3(7, 0, 0), Quaternion.identity);
     }
 }

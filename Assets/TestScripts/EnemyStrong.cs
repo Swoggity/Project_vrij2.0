@@ -2,28 +2,33 @@ using UnityEngine;
 
 public class EnemyStrong : Enemy
 {
+    private float playerPosition;
+
     public override void Die()
     {
-        Debug.Log("Strong defeated!");
+        Debug.Log("Fast defeated!");
         Destroy(gameObject);
     }
-
     private void Update()
     {
         if (!isObstacleDetected)
         {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
-            DetectObstacle();
+            transform.Translate(Vector2.left * speed * Time.deltaTime);
         }
+        DetectObstacle();
+        playerPosition = playerObject.transform.position.x;
     }
 
     private void DetectObstacle()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, detectionDistance);
-        if (hit.collider != null)
+        if (this.transform.position.x <= playerPosition + detectionDistance)
         {
             isObstacleDetected = true;
-            Debug.Log("Obstacle detected: " + hit.collider.gameObject.name);
         }
+        else if (this.transform.position.x >= playerPosition + detectionDistance + 2)
+        {
+            isObstacleDetected = false;
+        }
+
     }
 }
