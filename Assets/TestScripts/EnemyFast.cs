@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyFast : Enemy
 {
 
+
+
     public override void Die()
     {
         Debug.Log("Fast defeated!");
@@ -19,12 +21,14 @@ public class EnemyFast : Enemy
 
     private void DetectObstacle()
     {
-        Debug.Log("shooting ray");
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.right, detectionDistance);
-        if (hit.collider != null && hit.collider.gameObject.CompareTag("Player"))
+        if (this.transform.position.x <= playerObject.transform.position.x + detectionDistance)
         {
             isObstacleDetected = true;
-            Debug.Log("Obstacle detected: " + hit.collider.gameObject.name);
         }
+        else if (this.transform.position.x >= playerObject.transform.position.x + detectionDistance + 2)
+        {
+            isObstacleDetected = false;
+        }
+
     }
 }
