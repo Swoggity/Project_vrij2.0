@@ -101,6 +101,8 @@ MonoBehaviour:
   health: 6
   armor: 1
   speed: 1
+  isObstacleDetected: 0
+  detectionDistance: 5
 --- !u!61 &7949966013853705096
 BoxCollider2D:
   m_ObjectHideFlags: 0

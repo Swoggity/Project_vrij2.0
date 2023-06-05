@@ -5,6 +5,15 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public int health;
     public int armor;
     public float speed;
+    public bool isObstacleDetected = false;
+    public float detectionDistance;
+
+    public GameObject playerObject;
+
+    void Start()
+    {
+        playerObject = GameObject.FindWithTag("Player");
+    }
 
     public void TakeDamage(int damage)
     {
