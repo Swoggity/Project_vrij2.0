@@ -1,20 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
     // The amount of health that the object has
     public int health = 100;
     public Slider slider;
 
-    private void OnTriggerEnter(Collider other)
+    public void TakeDamage(int damage)
     {
-        // Check if the other collider has the "bullet" tag
-        if (other.tag == "Bullet")
-        {
-            // Decrease the object's health by 10
-            health -= 10;
-            slider.value = health;
-        }
+        health -= damage;
+        slider.value = health;
     }
 }
