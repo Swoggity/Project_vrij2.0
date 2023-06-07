@@ -60,7 +60,7 @@ public class TowerLookAtEnemy : MonoBehaviour
 
             // Smoothly rotate towards the target rotation
             transform.GetChild(0).rotation = Quaternion.RotateTowards(transform.GetChild(0).rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            Debug.Log(targetRotation);
+            //Debug.Log(targetRotation);
         }
         else
         {

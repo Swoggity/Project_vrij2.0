@@ -6,7 +6,7 @@ public class EnemyStrong : Enemy
 
     public override void Die()
     {
-        Debug.Log("Fast defeated!");
+        //Debug.Log("Fast defeated!");
         Destroy(gameObject);
     }
     private void Update()

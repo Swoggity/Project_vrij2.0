@@ -21,11 +21,11 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         if (damageTaken > 0)
         {
             health -= damageTaken;
-            Debug.Log(gameObject.name + " takes " + damageTaken + " damage");
+            //Debug.Log(gameObject.name + " takes " + damageTaken + " damage");
         }
         else
         {
-            Debug.Log(gameObject.name + "Not strong enough");
+            //Debug.Log(gameObject.name + "Not strong enough");
         }
 
         if (health <= 0)
