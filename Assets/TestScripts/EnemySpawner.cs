@@ -6,14 +6,18 @@ public class EnemySpawner : MonoBehaviour
 {
     public int difficultyLevel;
     public float timeBetweenWaves;
+    public int groupSize; // Maximum number of enemies in a group
     public List<Wave> waves;
 
     private int currentWaveIndex;
     private bool spawningWave;
     private float waveTimer;
 
+    [SerializeField]  private List<EnemyGroup> enemyGroups; // List to store enemy groups
+
     void Start()
     {
+        enemyGroups = new List<EnemyGroup>();
         StartNextWave();
     }
 
@@ -29,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
                 StartNextWave();
             }
         }
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             difficultyLevel++;
@@ -52,11 +57,33 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies(Wave wave)
     {
+        int placementNumber = 0; // Placement number within the group
+
         foreach (EnemySpawnData spawnData in wave.enemySpawnData)
         {
             for (int i = 0; i < spawnData.enemyCount; i++)
             {
-                Instantiate(spawnData.enemyPrefab, transform.position, Quaternion.identity);
+                if (enemyGroups.Count == 0 || enemyGroups[enemyGroups.Count - 1].IsFull())
+                {
+                    // Create a new enemy group if the last group is full or there are no groups yet
+                    EnemyGroup newGroup = new EnemyGroup(groupSize);
+                    enemyGroups.Add(newGroup);
+                    placementNumber = 0; // Reset the placement number when a new group is created
+                }
+
+                // Get the current group and add the enemy to it
+                EnemyGroup currentGroup = enemyGroups[enemyGroups.Count - 1];
+                GameObject enemyInstance = Instantiate(spawnData.enemyPrefab, transform.position, Quaternion.identity);
+                currentGroup.AddEnemy(enemyInstance);
+
+                // Set the placement number for the enemy
+                EnemyFast enemyFast = enemyInstance.GetComponent<EnemyFast>();
+                if (enemyFast != null)
+                {
+                    enemyFast.SetPlacementNumber(placementNumber);
+                    placementNumber++; // Increment the placement number for the next enemy in the group
+                }
+
                 yield return new WaitForSeconds(0.5f); // Adjust the delay duration as desired
             }
         }
@@ -73,5 +100,29 @@ public class EnemySpawner : MonoBehaviour
     {
         public GameObject enemyPrefab;
         public int enemyCount;
+    }
+
+    // Class to represent an enemy group
+    public class EnemyGroup
+    {
+        private List<GameObject> enemies;
+        private int maxSize;
+
+        public EnemyGroup(int maxSize)
+        {
+            this.maxSize = maxSize;
+            enemies = new List<GameObject>();
+        }
+
+        public bool IsFull()
+        {
+            return enemies.Count >= maxSize;
+        }
+
+        public void AddEnemy(GameObject enemy)
+        {
+            enemies.Add(enemy);
+            // Set the position or do any additional setup for the enemy within the group
+        }
     }
 }

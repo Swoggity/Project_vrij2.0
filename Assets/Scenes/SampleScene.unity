@@ -2076,51 +2076,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2097985322}
-  - component: {fileID: 2097985321}
   - component: {fileID: 2097985323}
   m_Layer: 0
-  m_Name: EnemyManager
+  m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2097985321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097985320}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41149e3b84fe19f43b7f81b7be5ca435, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  difficultyLevel: 1
-  timeBetweenWaves: 3
-  waves:
-  - enemySpawnData:
-    - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}
-      enemyCount: 2
-  - enemySpawnData:
-    - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}
-      enemyCount: 5
-  - enemySpawnData:
-    - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}
-      enemyCount: 2
-    - enemyPrefab: {fileID: 3149435820416288957, guid: 081d2df50cef4a54796d95a9b105148e, type: 3}
-      enemyCount: 1
-  - enemySpawnData:
-    - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}
-      enemyCount: 2
-    - enemyPrefab: {fileID: 3149435820416288957, guid: 081d2df50cef4a54796d95a9b105148e, type: 3}
-      enemyCount: 2
-  - enemySpawnData:
-    - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}
-      enemyCount: 1
-    - enemyPrefab: {fileID: 3149435820416288957, guid: 081d2df50cef4a54796d95a9b105148e, type: 3}
-      enemyCount: 3
 --- !u!4 &2097985322
 Transform:
   m_ObjectHideFlags: 0
@@ -2129,7 +2092,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097985320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.2480645, y: -3.9015954, z: -0.11380002}
+  m_LocalPosition: {x: 15.03, y: -3.9015954, z: -0.11380002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2149,7 +2112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyLevel: 0
-  timeBetweenWaves: 4
+  timeBetweenWaves: 5
+  groupSize: 6
   waves:
   - enemySpawnData:
     - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}

@@ -4,11 +4,16 @@ public class EnemyStrong : Enemy
 {
     private float playerPosition;
 
+    public void SetPlacementNumber(int placementNumber)
+    {
+        this.placementNumber = placementNumber;
+    }
+
     public override void Die()
     {
-        //Debug.Log("Fast defeated!");
         Destroy(gameObject);
     }
+
     private void Update()
     {
         if (!isObstacleDetected)
@@ -21,14 +26,13 @@ public class EnemyStrong : Enemy
 
     private void DetectObstacle()
     {
-        if (this.transform.position.x <= playerPosition + detectionDistance)
+        if (transform.position.x <= playerPosition + adjustedDetectionDistance)
         {
             isObstacleDetected = true;
         }
-        else if (this.transform.position.x >= playerPosition + detectionDistance + 2)
+        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 2)
         {
             isObstacleDetected = false;
         }
-
     }
 }

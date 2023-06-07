@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class EnemyFast : Enemy
 {
-
     private float playerPosition;
+
+    public void SetPlacementNumber(int placementNumber)
+    {
+        this.placementNumber = placementNumber;
+    }
 
     public override void Die()
     {
         Destroy(gameObject);
     }
+
     private void Update()
     {
         if (!isObstacleDetected)
@@ -17,18 +22,18 @@ public class EnemyFast : Enemy
         }
         DetectObstacle();
         playerPosition = playerObject.transform.position.x;
+        Debug.Log(placementNumber);
     }
 
     private void DetectObstacle()
     {
-        if (this.transform.position.x <= playerPosition + detectionDistance)
+        if (transform.position.x <= playerPosition + adjustedDetectionDistance)
         {
             isObstacleDetected = true;
         }
-        else if (this.transform.position.x >= playerPosition + detectionDistance + 2)
+        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 2)
         {
             isObstacleDetected = false;
         }
-
     }
 }
