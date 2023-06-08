@@ -15,8 +15,13 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     void Start()
     {
         playerObject = GameObject.FindWithTag("Player");
-        adjustedDetectionDistance = detectionDistance + ((placementNumber + Random.Range(0.5f, 4.5f)) * 2); // Adjust detection distance based on placement number
+        adjustedDetectionDistance = detectionDistance + ((placementNumber + Random.Range(0.5f, 1.5f)) * 1.5f); // Adjust detection distance based on placement number
     }
+    public void SetPlacementNumber(int placementNumber)
+    {
+        this.placementNumber = placementNumber;
+    }
+
 
     public void TakeDamage(int damage)
     {

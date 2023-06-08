@@ -4,11 +4,6 @@ public class EnemyStrong : Enemy
 {
     private float playerPosition;
 
-    public void SetPlacementNumber(int placementNumber)
-    {
-        this.placementNumber = placementNumber;
-    }
-
     public override void Die()
     {
         Destroy(gameObject);
@@ -22,6 +17,7 @@ public class EnemyStrong : Enemy
         }
         DetectObstacle();
         playerPosition = playerObject.transform.position.x;
+        Debug.Log(placementNumber);
     }
 
     private void DetectObstacle()

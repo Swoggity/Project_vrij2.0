@@ -9,11 +9,12 @@ public class EnemySpawner : MonoBehaviour
     public int groupSize; // Maximum number of enemies in a group
     public List<Wave> waves;
 
+    private int placementNumber = 0;
     private int currentWaveIndex;
     private bool spawningWave;
     private float waveTimer;
 
-    [SerializeField]  private List<EnemyGroup> enemyGroups; // List to store enemy groups
+    public List<EnemyGroup> enemyGroups; // List to store enemy groups
 
     void Start()
     {
@@ -57,7 +58,6 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies(Wave wave)
     {
-        int placementNumber = 0; // Placement number within the group
 
         foreach (EnemySpawnData spawnData in wave.enemySpawnData)
         {
@@ -77,13 +77,13 @@ public class EnemySpawner : MonoBehaviour
                 currentGroup.AddEnemy(enemyInstance);
 
                 // Set the placement number for the enemy
-                EnemyFast enemyFast = enemyInstance.GetComponent<EnemyFast>();
-                if (enemyFast != null)
+                Enemy enemy = enemyInstance.GetComponent<Enemy>();
+                if (enemy != null)
                 {
-                    enemyFast.SetPlacementNumber(placementNumber);
+                    enemy.SetPlacementNumber(placementNumber);
                     placementNumber++; // Increment the placement number for the next enemy in the group
                 }
-
+                
                 yield return new WaitForSeconds(0.5f); // Adjust the delay duration as desired
             }
         }

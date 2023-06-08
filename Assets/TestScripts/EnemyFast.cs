@@ -4,11 +4,6 @@ public class EnemyFast : Enemy
 {
     private float playerPosition;
 
-    public void SetPlacementNumber(int placementNumber)
-    {
-        this.placementNumber = placementNumber;
-    }
-
     public override void Die()
     {
         Destroy(gameObject);
