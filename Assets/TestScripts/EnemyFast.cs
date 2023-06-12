@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFast : Enemy
@@ -26,9 +27,10 @@ public class EnemyFast : Enemy
         {
             isObstacleDetected = true;
         }
-        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 2)
+        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 1)
         {
             isObstacleDetected = false;
         }
     }
+
 }

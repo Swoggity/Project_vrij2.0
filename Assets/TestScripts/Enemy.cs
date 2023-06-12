@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
@@ -15,12 +16,14 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     void Start()
     {
         playerObject = GameObject.FindWithTag("Player");
-        adjustedDetectionDistance = detectionDistance + ((placementNumber + Random.Range(0.5f, 1.5f)) * 1.5f); // Adjust detection distance based on placement number
+        adjustedDetectionDistance = detectionDistance + ((placementNumber + Random.Range(0.5f, 1.5f)) * 1f); // Adjust detection distance based on placement number
     }
+
     public void SetPlacementNumber(int placementNumber)
     {
         this.placementNumber = placementNumber;
     }
+
 
 
     public void TakeDamage(int damage)
@@ -39,6 +42,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         if (health <= 0)
         {
             Die();
+
         }
     }
 

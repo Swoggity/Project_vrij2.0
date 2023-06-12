@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -58,7 +58,6 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies(Wave wave)
     {
-
         foreach (EnemySpawnData spawnData in wave.enemySpawnData)
         {
             for (int i = 0; i < spawnData.enemyCount; i++)
@@ -80,14 +79,14 @@ public class EnemySpawner : MonoBehaviour
                 Enemy enemy = enemyInstance.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.SetPlacementNumber(placementNumber);
-                    placementNumber++; // Increment the placement number for the next enemy in the group
+                    enemy.SetPlacementNumber(currentGroup.enemies.Count - 1); // Set the placement number to the index of the enemy in the group
                 }
-                
+
                 yield return new WaitForSeconds(0.5f); // Adjust the delay duration as desired
             }
         }
     }
+
 
     [System.Serializable]
     public class Wave
@@ -105,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
     // Class to represent an enemy group
     public class EnemyGroup
     {
-        private List<GameObject> enemies;
+        public List<GameObject> enemies; // Change access modifier to public
         private int maxSize;
 
         public EnemyGroup(int maxSize)
