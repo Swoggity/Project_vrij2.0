@@ -7,6 +7,8 @@ public class EnemyFast : Enemy
 
     public override void Die()
     {
+        Quaternion rotation = Quaternion.Euler(-90f, 0f, 0f);
+        Instantiate(DeathEffect, transform.position, rotation);
         Destroy(gameObject);
     }
 
@@ -18,7 +20,6 @@ public class EnemyFast : Enemy
         }
         DetectObstacle();
         playerPosition = playerObject.transform.position.x;
-        Debug.Log(placementNumber);
     }
 
     private void DetectObstacle()

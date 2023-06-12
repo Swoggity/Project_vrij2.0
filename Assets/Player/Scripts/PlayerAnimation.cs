@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-
     private Animator mAnimator;
+    private PlayerShoot PlayerShoot;
+    private int randomShoot;
 
     void Start()
     {
         mAnimator = GetComponent<Animator>();
+        PlayerShoot = GetComponentInChildren<PlayerShoot>();
     }
 
     void Update()
@@ -34,6 +36,16 @@ public class PlayerAnimation : MonoBehaviour
             {
                 mAnimator.SetBool("RunningBack", false);
                 mAnimator.SetBool("Running", false);
+            }
+            if (PlayerShoot.isFiring)
+            {
+                mAnimator.SetBool("Shooting", true);
+                randomShoot = Random.Range(0, 2);
+                mAnimator.SetInteger("ShootRandom", randomShoot);
+            }
+            else
+            {
+                mAnimator.SetBool("Shooting", false);
             }
         }
     }

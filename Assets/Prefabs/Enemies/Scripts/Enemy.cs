@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public int placementNumber; // Placement number within the group
 
     public GameObject playerObject;
+    public GameObject DeathEffect;
 
     void Start()
     {

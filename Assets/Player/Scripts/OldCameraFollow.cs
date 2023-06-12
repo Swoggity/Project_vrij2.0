@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class OldCameraFollow : MonoBehaviour
 {
     private Transform player;
     private Vector3 offset;
