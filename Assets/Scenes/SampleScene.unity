@@ -443,6 +443,57 @@ Transform:
   m_Father: {fileID: 272955009}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &187625351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 187625353}
+  - component: {fileID: 187625352}
+  m_Layer: 0
+  m_Name: CO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &187625352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187625351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e4838a249506840b8801f8ea82fb8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startCamOffset: -7
+  standardCamOffset: 7
+  startScreen: {fileID: 0}
+  fadeScreen: {fileID: 0}
+  tutorialPop: {fileID: 0}
+  player: {fileID: 0}
+  spawner: {fileID: 0}
+--- !u!4 &187625353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187625351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &272955007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,8 +1542,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  moveSpeedBackMod: 0.4
   leftLimit: -9
   rightLimit: 19
+  isMainPlayer: 1
 --- !u!4 &933108255
 Transform:
   m_ObjectHideFlags: 0
@@ -6870,6 +6923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c933893b7329fd64880f59aefb960cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAnimator: {fileID: 0}
+  moveSpeedBackMod: 0.4
+  isMainPlayer: 1
 --- !u!114 &9017954109847248169
 MonoBehaviour:
   m_ObjectHideFlags: 0
