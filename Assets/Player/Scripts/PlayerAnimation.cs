@@ -11,7 +11,7 @@ public class PlayerAnimation : MonoBehaviour
     void Start()
     {
         mAnimator = GetComponent<Animator>();
-        PlayerShoot = GetComponentInChildren<PlayerShoot>();
+        PlayerShoot = GetComponentInParent<PlayerShoot>();
     }
 
     void Update()

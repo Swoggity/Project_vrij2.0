@@ -5,17 +5,14 @@ public class PlayerShoot : MonoBehaviour
     public float fireRate = 0.2f; // Rate of fire in seconds
     public float cooldownTime = 0.5f; // Cooldown time in seconds
     public int damage = 2;
+    public float speed = 10f;
     public Transform barrelExit;
     public GameObject hitMarker;
-    public ParticleSystem particleSystem;
+    public GameObject muzzleFlash;
+    public GameObject projectilePrefab;
 
-    public float nextFireTime; // Time of the next allowed fire
-    public bool isFiring = false; // Flag indicating if player is firing
-
-    private void Start()
-    {
-        particleSystem.Stop();
-    }
+    private float nextFireTime;
+    public bool isFiring = false;
 
     private void Update()
     {
@@ -28,7 +25,6 @@ public class PlayerShoot : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isFiring = false;
-            particleSystem.Stop();
         }
 
         if (isFiring && Time.time > nextFireTime)
@@ -39,21 +35,19 @@ public class PlayerShoot : MonoBehaviour
 
     private void Fire()
     {
-        particleSystem.Play(); // Play the particle system when the player is firing
+        Instantiate(muzzleFlash, barrelExit.position, Quaternion.identity);
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(barrelExit.position, barrelExit.right);
-        foreach (RaycastHit2D hit in hits)
+        GameObject projectile = Instantiate(projectilePrefab, barrelExit.position, barrelExit.rotation);
+        PlayerBullet projectileComponent = projectile.GetComponent<PlayerBullet>();
+        if (projectileComponent != null)
         {
-            Debug.Log(hit.collider.gameObject.name);
-            IDamageable damageableObject = hit.collider.GetComponent<IDamageable>();
-            if (damageableObject != null)
-            {
-                Instantiate(hitMarker, new Vector3(hit.collider.transform.position.x + 0.5f, barrelExit.position.y, 0), Quaternion.identity);
-                damageableObject.TakeDamage(damage);
-                break;
-            }
+            projectileComponent.SetDamage(damage, speed, hitMarker);
         }
-        Debug.DrawRay(barrelExit.position, barrelExit.right * hits[0].distance, Color.red, 0.2f);
+
+        // Apply bullet spread by modifying the rotation
+        float spreadAngle = Random.Range(-10f, 10f);
+        Quaternion spreadRotation = Quaternion.Euler(0f, 0f, barrelExit.eulerAngles.z + spreadAngle);
+        projectile.transform.rotation = spreadRotation;
 
         nextFireTime = Time.time + fireRate;
         if (!isFiring)

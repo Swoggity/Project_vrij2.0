@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-    public float speed = 10f;
-    public int damage = 2;
+    private float speed = 10f;
+    private int damage;
+    private GameObject hitMarker;
 
     private void Update()
     {
@@ -15,8 +16,15 @@ public class PlayerBullet : MonoBehaviour
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if (damageable != null)
         {
+            Instantiate(hitMarker, new Vector3(transform.position.x + 0.1f, transform.position.y, 0), Quaternion.identity);
             damageable.TakeDamage(damage);
             Destroy(gameObject);
         }
+    }
+    public void SetDamage(int damageValue, float speedValue, GameObject hitMarkerGameObject)
+    {
+        damage = damageValue;
+        speed = speedValue;
+        hitMarker = hitMarkerGameObject;
     }
 }
