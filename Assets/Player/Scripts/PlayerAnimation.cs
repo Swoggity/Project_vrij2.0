@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private Animator mAnimator;
+    public Animator mAnimator;
     private PlayerShoot PlayerShoot;
+    public float moveSpeedBackMod = 0.4f;
     private int randomShoot;
+    public bool isMainPlayer = true;
+    CO co;
 
     void Start()
     {
+        co = FindObjectOfType<CO>();
         mAnimator = GetComponent<Animator>();
         PlayerShoot = GetComponentInChildren<PlayerShoot>();
     }
@@ -18,18 +22,30 @@ public class PlayerAnimation : MonoBehaviour
     {
         if(mAnimator != null)
         {
-            if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.C))
+            float moving = 0;
+            if (!co.isGamePaused() && isMainPlayer)
+            {
+                if (Input.GetKey(KeyCode.Z)) moving = -moveSpeedBackMod;
+                if (Input.GetKey(KeyCode.C)) moving = 1;
+            }
+            else
+            {
+                moving = co.MoveOverride();
+            }
+            if (moving != 0)
             {
                 //Running = naar voren rennen
                 //RunningBack is naar achteren rennen
                 mAnimator.SetBool("Running", true);
-               if (Input.GetKey(KeyCode.C))
+                if (moving > 0)
                 {
                      mAnimator.SetBool("RunningBack", false);
+                     mAnimator.speed = Mathf.Abs(moving);
                 }
-               if (Input.GetKey(KeyCode.Z))
+                else
                 {
                     mAnimator.SetBool("RunningBack", true);
+                    mAnimator.speed = Mathf.Abs(moving);
                 }
             }
             else
@@ -37,6 +53,7 @@ public class PlayerAnimation : MonoBehaviour
                 mAnimator.SetBool("RunningBack", false);
                 mAnimator.SetBool("Running", false);
             }
+            if (!isMainPlayer) return;
             if (PlayerShoot.isFiring)
             {
                 mAnimator.SetBool("Shooting", true);

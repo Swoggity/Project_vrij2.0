@@ -11,9 +11,9 @@ public class EnemyFast : Enemy
         Instantiate(DeathEffect, transform.position, rotation);
         Destroy(gameObject);
     }
-
     private void Update()
     {
+        if (co.isGamePaused()) return;
         if (!isObstacleDetected)
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
