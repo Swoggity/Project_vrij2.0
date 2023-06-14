@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
     private int placementNumber = 0;
     private int currentWaveIndex;
     private bool spawningWave;
-    private float waveTimer;
+    public float waveTimer;
 
     public List<EnemyGroup> enemyGroups; // List to store enemy groups
 
@@ -35,14 +35,14 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        /*if (Input.GetKeyDown(KeyCode.X))
         {
             difficultyLevel++;
             if (difficultyLevel > 5)
             {
                 difficultyLevel = 0;
             }
-        }
+        }*/
     }
 
     void StartNextWave()

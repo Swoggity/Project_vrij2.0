@@ -13,12 +13,13 @@ public class SFX : MonoBehaviour
             if (!source.isPlaying) Destroy(gameObject);
         }
     }
-
     public void initSFX(AudioClip cli, float pitchshift, float volume) //Run after creating prefab
     {
         source = GetComponent<AudioSource>();
         source.clip = cli;
+        source.pitch = Random.Range(1 - pitchshift, 1 + pitchshift);
         source.Play();
+        source.loop = false;
         isPlay = true;
     }
     public void initSFX(AudioClip clip, float pitchshift)
