@@ -1383,6 +1383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  moveSpeedBackMod: 0.4
   leftLimit: -9
   rightLimit: 60
   isMainPlayer: 1
@@ -1427,10 +1428,11 @@ MonoBehaviour:
   fireRate: 0.2
   cooldownTime: 0.5
   damage: 2
+  speed: 10
   barrelExit: {fileID: 6075708261881636163}
   hitMarker: {fileID: 3096887676017900699, guid: 760645cec5d15ff458cff07a027a4936, type: 3}
-  particleSystem: {fileID: 6075708261881636191}
-  nextFireTime: 0
+  muzzleFlash: {fileID: 1668266075837510865, guid: 53ca4fcde24d6944bbdfb1a2d82766c7, type: 3}
+  projectilePrefab: {fileID: 3755785189026475070, guid: 0323544585cd7724db395e67c6715e79, type: 3}
   isFiring: 0
 --- !u!1 &6075708261881636160
 GameObject:
@@ -1482,10 +1484,11 @@ MonoBehaviour:
   fireRate: 0.2
   cooldownTime: 0.5
   damage: 2
+  speed: 10
   barrelExit: {fileID: 6075708261881636163}
   hitMarker: {fileID: 3096887676017900699, guid: 760645cec5d15ff458cff07a027a4936, type: 3}
-  particleSystem: {fileID: 6075708261881636191}
-  nextFireTime: 0
+  muzzleFlash: {fileID: 0}
+  projectilePrefab: {fileID: 0}
   isFiring: 0
 --- !u!50 &6075708261881636189
 Rigidbody2D:
@@ -6953,6 +6956,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c933893b7329fd64880f59aefb960cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAnimator: {fileID: 0}
+  moveSpeedBackMod: 0.4
+  isMainPlayer: 1
 --- !u!1 &7395142947303937066
 GameObject:
   m_ObjectHideFlags: 0

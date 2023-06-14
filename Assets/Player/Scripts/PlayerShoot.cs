@@ -10,12 +10,18 @@ public class PlayerShoot : MonoBehaviour
     public GameObject hitMarker;
     public GameObject muzzleFlash;
     public GameObject projectilePrefab;
+    CO co;
 
     private float nextFireTime;
     public bool isFiring = false;
 
+    private void Start()
+    {
+        co = FindObjectOfType<CO>();
+    }
     private void Update()
     {
+        if (co.isGamePaused()) return;
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFireTime)
         {
             isFiring = true;

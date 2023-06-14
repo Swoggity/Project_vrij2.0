@@ -69,6 +69,7 @@ public class CO : MonoBehaviour
         }
         cinematicMoveOverride = 0.4f;
         yield return new WaitForSeconds(1);
+        //Propaganda opening HERE
         StartCoroutine(StartMissionCam());
         while (fadeAlpha > 0.0f)
         {
