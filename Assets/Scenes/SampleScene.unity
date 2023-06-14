@@ -2722,7 +2722,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1800806481
 GameObject:
@@ -3615,7 +3615,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2062930632
 BoxCollider2D:
@@ -3706,11 +3706,15 @@ MonoBehaviour:
   waves:
   - enemySpawnData:
     - enemyPrefab: {fileID: 4424843562079874801, guid: a9b11816360da9740b072dd196feda4b, type: 3}
-      enemyCount: 3
+      enemyCount: 1
+    - enemyPrefab: {fileID: 2204750227203436758, guid: 6edb320afc7c65844af9517c71910296, type: 3}
+      enemyCount: 1
+    - enemyPrefab: {fileID: 3231253766099528216, guid: 0c5e61b55a3b9b64baeb7af825a03aea, type: 3}
+      enemyCount: 1
   - enemySpawnData:
-    - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}
+    - enemyPrefab: {fileID: 2204750227203436758, guid: 6edb320afc7c65844af9517c71910296, type: 3}
       enemyCount: 2
-    - enemyPrefab: {fileID: 3149435820416288957, guid: 081d2df50cef4a54796d95a9b105148e, type: 3}
+    - enemyPrefab: {fileID: 4424843562079874801, guid: a9b11816360da9740b072dd196feda4b, type: 3}
       enemyCount: 1
   - enemySpawnData:
     - enemyPrefab: {fileID: 833888434884683780, guid: 513aa8a5f98de5e499e9f47b636f1316, type: 3}
@@ -5914,7 +5918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e9ed5ae283ec649bc42ba7eb9e9d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mAnimator: {fileID: 0}
 --- !u!222 &7755352855905330232
 CanvasRenderer:
   m_ObjectHideFlags: 0
