@@ -11,6 +11,43 @@ public class AbilityManager : MonoBehaviour
         public bool isLocked = true;
         public KeyCode button;
         [HideInInspector] public AbilityPlaceholder abilityPlaceholder;
+
+        public void ExecuteAbility()
+        {
+            // Define the behavior of the ability here
+            // Replace this method with the specific behavior for each ability
+
+            switch (abilityObject.name)
+            {
+                case "Ability1":
+                    // Behavior for Ability 1
+                    Debug.Log("Executing Ability 1");
+                    // Add your code for Ability 1 here
+                    break;
+
+                case "Ability2":
+                    // Behavior for Ability 2
+                    Debug.Log("Executing Ability 2");
+                    // Add your code for Ability 2 here
+                    break;
+
+                case "Ability3":
+                    // Behavior for Ability 3
+                    Debug.Log("Executing Ability 3");
+                    // Add your code for Ability 3 here
+                    break;
+
+                case "Ability4":
+                    // Behavior for Ability 4
+                    Debug.Log("Executing Ability 4");
+                    // Add your code for Ability 4 here
+                    break;
+
+                default:
+                    Debug.Log("Unknown ability: " + abilityObject.name);
+                    break;
+            }
+        }
     }
 
     public AbilityData[] abilities;
@@ -48,7 +85,10 @@ public class AbilityManager : MonoBehaviour
             if (abilityData.abilityPlaceholder != null && !abilityData.isLocked)
             {
                 abilityData.abilityPlaceholder.UseAbility(abilityData.speed);
+                abilityData.ExecuteAbility(); // Execute the ability's behavior
             }
         }
     }
 }
+
+
