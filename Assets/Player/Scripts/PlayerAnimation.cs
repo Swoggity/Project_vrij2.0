@@ -40,12 +40,10 @@ public class PlayerAnimation : MonoBehaviour
                 if (moving > 0)
                 {
                      mAnimator.SetBool("RunningBack", false);
-                     mAnimator.speed = Mathf.Abs(moving);
                 }
                 else
                 {
                     mAnimator.SetBool("RunningBack", true);
-                    mAnimator.speed = Mathf.Abs(moving);
                 }
             }
             else
