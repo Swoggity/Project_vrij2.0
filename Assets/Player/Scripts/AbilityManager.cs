@@ -22,7 +22,8 @@ public class AbilityManager : MonoBehaviour
                 case "Ability1":
                     // Behavior for Ability 1
                     Debug.Log("Executing Ability 1");
-                    // Add your code for Ability 1 here
+                    SpawnTower spawnTower = abilityObject.GetComponent<SpawnTower>();
+                    spawnTower.Activate();
                     break;
 
                 case "Ability2":
@@ -82,7 +83,7 @@ public class AbilityManager : MonoBehaviour
         {
             AbilityData abilityData = abilities[abilityIndex];
 
-            if (abilityData.abilityPlaceholder != null && !abilityData.isLocked)
+            if (abilityData.abilityPlaceholder != null && !abilityData.isLocked && abilityData.abilityPlaceholder.isUsingAbility == false)
             {
                 abilityData.abilityPlaceholder.UseAbility(abilityData.speed);
                 abilityData.ExecuteAbility(); // Execute the ability's behavior
@@ -90,5 +91,3 @@ public class AbilityManager : MonoBehaviour
         }
     }
 }
-
-

@@ -7,7 +7,7 @@ public class AbilityPlaceholder : MonoBehaviour
 {
     public float speed = 1f;
 
-    private bool isUsingAbility = false;
+    public bool isUsingAbility = false;
     private Animator mAnimator;
     private Slider slider;
 
