@@ -15,10 +15,12 @@ public class EnemySpawner : MonoBehaviour
     public float waveTimer;
 
     public List<EnemyGroup> enemyGroups; // List to store enemy groups
+    CO co;
 
     void Start()
     {
         enemyGroups = new List<EnemyGroup>();
+        co = FindObjectOfType<CO>();
         StartNextWave();
     }
 
@@ -58,6 +60,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemies(Wave wave)
     {
+        int voiceleader = 0;
         foreach (EnemySpawnData spawnData in wave.enemySpawnData)
         {
             for (int i = 0; i < spawnData.enemyCount; i++)
@@ -74,6 +77,21 @@ public class EnemySpawner : MonoBehaviour
                 EnemyGroup currentGroup = enemyGroups[enemyGroups.Count - 1];
                 GameObject enemyInstance = Instantiate(spawnData.enemyPrefab, transform.position, Quaternion.identity);
                 currentGroup.AddEnemy(enemyInstance);
+                if (co.selfAware()) //Every first Protestor of a group carries a voice line after seven-minute-mark
+                {
+                    bool notAttack = Random.Range(0f,1f) < 0.8f? false : true; //20% chance to abstain from combat and have different voice line
+                    if (voiceleader == 0 && enemyInstance.GetComponent<EnemyFast>() != null)
+                    {
+                        voiceleader = 1;
+                        EnemyFast enem = enemyInstance.GetComponent<EnemyFast>();
+                        enem.carryVoice = notAttack ? 3 : 2;
+                    }
+                    else if (notAttack)
+                    {
+                        Enemy enem = enemyInstance.GetComponent<Enemy>();
+                        enem.carryVoice = 1;
+                    }
+                }
 
                 // Set the placement number for the enemy
                 Enemy enemy = enemyInstance.GetComponent<Enemy>();

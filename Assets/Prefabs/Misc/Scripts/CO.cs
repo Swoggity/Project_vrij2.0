@@ -24,6 +24,7 @@ public class CO : MonoBehaviour
     [SerializeField] EnemySpawner spawner;
     [SerializeField] AudioSource OST;
     [SerializeField] GameObject transmissionUI;
+    Vector3 transmissionAnchor;
     [SerializeField] GameObject ArtilleryPrefab;
     bool isSelfAware = false;
     bool gamePaused = true;
@@ -45,7 +46,7 @@ public class CO : MonoBehaviour
             if (MissionCounter == 250) spawner.difficultyLevel++; //About 4.6 minutes in
             if (MissionCounter == 5) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =300
             if (MissionCounter == 20) StartCoroutine(nineMinutes()); //About 7.5 minutes in =420
-            if (MissionCounter == 450) StartCoroutine(endingArtillery()); //About 8 minutes in
+            if (MissionCounter == 60) StartCoroutine(endingArtillery()); //About 8 minutes in =450
             yield return new WaitForSeconds(1);
         }
 
@@ -53,7 +54,7 @@ public class CO : MonoBehaviour
     private void Update()
     {
         if (startScreen == null) return; //If CO is only here for testing, don't do anything
-        if (Input.GetMouseButtonUp(0))
+        if (Input.anyKeyDown)
         {
             if (startAlpha == 1.0f)
             {
@@ -66,6 +67,7 @@ public class CO : MonoBehaviour
     {
         gamePaused = true;
         cam = FindObjectOfType<CameraTest>();
+        transmissionAnchor = transmissionUI.transform.position;
         if (startScreen == null)
         {
             //If CO is here for testing, change variables
@@ -244,7 +246,6 @@ public class CO : MonoBehaviour
     {
         return gamePaused;
     }
-
     public float MoveOverride()
     {
         return cinematicMoveOverride;
@@ -262,10 +263,14 @@ public class CO : MonoBehaviour
         float Volumos = 0.8f;
         float Pitchos = 1.0f;
         bool startRing = false;
+        Image fadeim = fadeScreen.GetComponent<Image>();
+        fadeim.sprite = Resources.Load<Sprite>("Vinai");
+        fadeScreen.SetActive(true);
         while (Volumos > 0.2f)
         {
             Volumos -= Time.deltaTime * 0.2f;
             Pitchos -= Time.deltaTime * 0.1f;
+            fadeim.color = new Color(1, 1, 1, 0.8f - Volumos);
             setMainOSTVolume(Volumos);
             OST.pitch = Pitchos;
             if (Volumos < 0.5f && !startRing)
@@ -273,6 +278,7 @@ public class CO : MonoBehaviour
                 startRing = true;
                 playSound(Resources.Load<AudioClip>("SFX/RingInEar"), false);
             }
+            yield return null;
         }
 
         yield return new WaitForSeconds(2f);
@@ -280,9 +286,12 @@ public class CO : MonoBehaviour
         while (Volumos < 0.8f) {
             Volumos += Time.deltaTime * 0.2f;
             Pitchos += Time.deltaTime * 0.1f;
+            fadeim.color = new Color(1, 1, 1, 0.8f - Volumos);
             setMainOSTVolume(Volumos);
             OST.pitch = Pitchos;
+            yield return null;
         }
+        fadeScreen.SetActive(false);
         setMainOSTVolume(1);
         OST.pitch = 1;
         //Ring in ears
@@ -292,16 +301,17 @@ public class CO : MonoBehaviour
     {
         //Artillery Announcement
         //Move position of Transmission downward
-        while (transmissionUI.transform.localPosition.y > -75)
+        while (transmissionUI.transform.position.y > transmissionAnchor.y-225)
         {
-            transmissionUI.transform.localPosition = new Vector3(transmissionUI.transform.localPosition.x, transmissionUI.transform.localPosition.y+(225*Time.deltaTime*0.5f), 0);
+            transmissionUI.transform.position = new Vector3(transmissionUI.transform.position.x, transmissionUI.transform.position.y-(225*Time.deltaTime*0.5f), 0);
             yield return null;
         }
         //Play Voiceline?
         //Move position of Transmission upward
-        while (transmissionUI.transform.localPosition.y < 150)
+        yield return new WaitForSeconds(5f);
+        while (transmissionUI.transform.position.y < transmissionAnchor.y)
         {
-            transmissionUI.transform.localPosition = new Vector3(transmissionUI.transform.localPosition.x, transmissionUI.transform.localPosition.y - (225 * Time.deltaTime * 0.5f), 0);
+            transmissionUI.transform.position = new Vector3(transmissionUI.transform.position.x, transmissionUI.transform.position.y + (225 * Time.deltaTime * 0.5f), 0);
             yield return null;
         }
     }
