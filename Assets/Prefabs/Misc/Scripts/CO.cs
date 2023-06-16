@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Unity.VisualScripting.Member;
 
@@ -38,6 +40,10 @@ public class CO : MonoBehaviour
             if (FindObjectsOfType<Enemy>().Length < 2)
             {
                 spawner.waveTimer = 0;
+            }
+            if (!OST.isPlaying)
+            {
+                mainOST(Resources.Load<AudioClip>("SFX/OST_Destroyer"), 0.8f, false);
             }
             if (MissionCounter == 50) spawner.difficultyLevel++; //About 1.3 minutes in
             if (MissionCounter == 100) spawner.difficultyLevel++; //About 1.9 minutes in
@@ -121,7 +127,7 @@ public class CO : MonoBehaviour
         {
             yield return null;
         }
-        mainOST(Resources.Load<AudioClip>("SFX/OST_WarIsGood"), 0.8f, true);
+        mainOST(Resources.Load<AudioClip>("SFX/OST_WarIsGood"), 0.8f, false);
         StartCoroutine(StartMissionCam2());
         foreach (PlayerMovement play in Others)
         {
@@ -319,7 +325,53 @@ public class CO : MonoBehaviour
     {
         float Progress = 0f;
         //Ending Artillery
-        yield return null;
+        float fadeToWhite = 0f;
+        fadeScreen.SetActive(true);
+        Image fadeim = fadeScreen.GetComponent<Image>();
+        fadeim.sprite = Resources.Load<Sprite>("White");
+        fadeim.color = new Color(1, 1, 1, fadeToWhite);
+
+        //Spawn background artillery first
+        int Arts = 10;
+        while (Arts > 0)
+        {
+            Arts--;
+            //Spawn Arty Background
+            Vector3 vec = player.transform.position + new Vector3(Random.Range(-10, 18), -0.6f, 0);
+            Instantiate(Resources.Load<GameObject>("ArtilleryImpactCinematicBack"), vec, Quaternion.identity);
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield return new WaitForSeconds(4);
+        //Then spawn foreground artillery
+        Arts = 10;
+        while (Arts > 0)
+        {
+            Arts--;
+            //Spawn Arty Foreground
+            Vector3 vec = player.transform.position + new Vector3(Random.Range(-10, 18), -0.6f, 0);
+            Instantiate(Resources.Load<GameObject>("ArtilleryImpactCinematic"), vec, Quaternion.identity);
+            yield return new WaitForSeconds(0.2f);
+        }
+        //5 second impact delay
+        yield return new WaitForSeconds(2f);
+        //Immediate fade to white
+        while (fadeToWhite < 0.2f)
+        {
+            fadeToWhite += Time.deltaTime*0.2f;
+            fadeim.color = new Color(1, 1, 1, fadeToWhite);
+            yield return null;
+        }
+        //Artillery IMPACT
+        while (fadeToWhite < 1f)
+        {
+            fadeToWhite += Time.deltaTime;
+            fadeim.color = new Color(1, 1, 1, fadeToWhite);
+            yield return null;
+        }
+        gamePaused = true;
+        yield return new WaitForSeconds(4f);
+        //Placeholder: Going to ENDING immediately
+        SceneManager.LoadScene("Ending");
     }
 
     public bool selfAware()

@@ -6,20 +6,22 @@ using UnityEngine;
 public class VOICE : MonoBehaviour
 {
     [SerializeField] TextMeshPro texto;
-    float disTime = 5f;
+    float disTime = 4f;
     float fade = 1.0f;
 
     public void setVoiceLine(string voiceLine, bool isUnsettling)
     {
         Color col = Color.white;
-        if (isUnsettling) col = Color.red;
+        //if (isUnsettling) col = Color.red;
         texto.color = col;
         texto.text = voiceLine;
+        texto.fontSize = 4;
     }
 
     private void Update()
     {
-        disTime = Time.deltaTime;
+        disTime -= Time.deltaTime;
+        transform.position += new Vector3(0, 0.5f, 0) * Time.deltaTime;
         if (disTime < 0) Destroy(gameObject);
         if (disTime < 2)
         {

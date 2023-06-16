@@ -39,7 +39,6 @@ public class EnemyFast : Enemy
         if (carryVoice < 2) return;
         if (transform.position.x <= playerPosition + adjustedDetectionDistance +2)
         {
-            carryVoice -= 2; //2 becomes 0, 3 becomes 1
             string[] voice = {""};
             Debug.Log("Doing voice!");
             switch (carryVoice)
@@ -62,18 +61,19 @@ public class EnemyFast : Enemy
                     //Confronting
                     voice = new string[]
                     {
-                        "Please stop.",
-                        "Stop shooting.",
-                        "Don't hurt us.",
-                        "We want only peace.",
-                        "This is not a game.",
-                        "Leave us alone.",
-                        "We won't hurt you."
+                        "Please stop!",
+                        "Stop shooting!",
+                        "Don't hurt us!",
+                        "We want only peace!",
+                        "Stop!",
+                        "Leave us alone!"
                     };
                     break;
             }
             int rr = Mathf.FloorToInt(Random.Range(0, voice.Length));
             Instantiate(Resources.Load<VOICE>("VOICE"),transform.position+new Vector3(0,5,0),transform.rotation).setVoiceLine(voice[rr],carryVoice == 3); //Load Voice prefab
+
+            carryVoice -= 2; //2 becomes 0, 3 becomes 1
         }
     }
 

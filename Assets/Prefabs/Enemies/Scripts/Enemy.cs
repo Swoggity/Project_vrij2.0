@@ -53,7 +53,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public void DieScore()
     {
         int scoredrop = scoreWorth; //This should be adjusted by combo modifiers programmed into the Controller in the future
-        Vector3 vecadjust = new Vector3(0, 4, 0);
+        Vector3 vecadjust = new Vector3(0, 5, 0);
         co.addScore(scoredrop, transform.position+vecadjust); //This variable should be used when players are hit as well
     }
 
