@@ -29,6 +29,8 @@ public class AbilityManager : MonoBehaviour
                 case "Ability2":
                     // Behavior for Ability 2
                     Debug.Log("Executing Ability 2");
+                    ParryAbility parryAbility = abilityObject.GetComponent<ParryAbility>();
+                    parryAbility.PerformParryAttack();
                     // Add your code for Ability 2 here
                     break;
 

@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public int placementNumber; // Placement number within the group
     public int scoreWorth = 100;
 
+
     public GameObject playerObject;
     public GameObject DeathEffect;
     protected CO co;
@@ -38,7 +39,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         }
         else
         {
-            //Debug.Log(gameObject.name + "Not strong enough");
+            Debug.Log(gameObject.name + "Not strong enough");
         }
 
         if (health <= 0)
