@@ -14,6 +14,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public int carryVoice; //0 = Nothing, 1 = Will Not Attack, 2 = Generic, 3 = Confronting
     //Only EnemyFast says voice lines (they are the Protestors) but other enemies are still able to enter Will Not Attack phase
 
+
     public GameObject playerObject;
     public GameObject DeathEffect;
     protected CO co;
@@ -40,7 +41,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         }
         else
         {
-            //Debug.Log(gameObject.name + "Not strong enough");
+            Debug.Log(gameObject.name + "Not strong enough");
         }
 
         if (health <= 0)
