@@ -4,7 +4,7 @@ public class PlayerShoot : MonoBehaviour
 {
     public float fireRate = 0.2f; // Rate of fire in seconds
     public float cooldownTime = 0.5f; // Cooldown time in seconds
-    public int damage = 2;
+    public int damage = 1;
     public float speed = 10f;
     public Transform barrelExit;
     public GameObject hitMarker;
@@ -31,6 +31,7 @@ public class PlayerShoot : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isFiring = false;
+            playSound(Resources.Load<AudioClip>("SFX/MG_MOUSE-UP"));
         }
 
         if (isFiring && Time.time > nextFireTime)
@@ -42,6 +43,7 @@ public class PlayerShoot : MonoBehaviour
     private void Fire()
     {
         Instantiate(muzzleFlash, barrelExit.position, Quaternion.identity);
+        playSound(Resources.Load<AudioClip>("SFX/MG_SHOT_" + Mathf.FloorToInt(Random.Range(1, 7)).ToString()));
 
         GameObject projectile = Instantiate(projectilePrefab, barrelExit.position, barrelExit.rotation);
         PlayerBullet projectileComponent = projectile.GetComponent<PlayerBullet>();
@@ -60,5 +62,10 @@ public class PlayerShoot : MonoBehaviour
         {
             nextFireTime += cooldownTime;
         }
+    }
+
+    private void playSound(AudioClip clip)
+    {
+        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip);
     }
 }
