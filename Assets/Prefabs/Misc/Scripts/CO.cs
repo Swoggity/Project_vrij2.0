@@ -128,7 +128,7 @@ public class CO : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             Change++;
-            playSound(Resources.Load<AudioClip>("SFX/MG_BEEFY_SHOT_"+Mathf.FloorToInt(Random.Range(1,7)).ToString()), false);
+            playSoundSoft(Resources.Load<AudioClip>("SFX/MG_BEEFY_SHOT_"+Mathf.FloorToInt(Random.Range(1,7)).ToString()), false);
             int ren = Mathf.FloorToInt(Random.Range(0, spritlist.Length));
             if (ren == Previous) ren++;
             if (ren >= spritlist.Length) ren = 0;
@@ -246,6 +246,14 @@ public class CO : MonoBehaviour
         AudioSource source = GetComponent<AudioSource>();
         source.clip = cli;
         source.volume = 0.8f;
+        source.loop = loop;
+        source.Play();
+    }
+    public void playSoundSoft(AudioClip cli, bool loop)
+    {
+        AudioSource source = GetComponent<AudioSource>();
+        source.clip = cli;
+        source.volume = 0.5f;
         source.loop = loop;
         source.Play();
     }
