@@ -24,11 +24,16 @@ public class EnemyFast : Enemy
 
     private void DetectObstacle()
     {
+        if (co.becomeAlly)
+        {
+            isObstacleDetected = false;
+            return;
+        }
         if (transform.position.x <= playerPosition + adjustedDetectionDistance)
         {
             isObstacleDetected = true;
         }
-        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 1)
+        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 0.7f)
         {
             isObstacleDetected = false;
         }

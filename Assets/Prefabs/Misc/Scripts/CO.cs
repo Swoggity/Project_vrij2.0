@@ -30,7 +30,9 @@ public class CO : MonoBehaviour
     Vector3 transmissionAnchor;
     [SerializeField] TextMeshProUGUI scoreTexto;
     [SerializeField] TextMeshProUGUI scoreNum;
+    [SerializeField] TextMeshProUGUI endingText;
     bool isSelfAware = false;
+    public bool becomeAlly = false;
     bool gamePaused = true;
     float cinematicMoveOverride = 0f;
     int playerScore = 0;
@@ -55,8 +57,8 @@ public class CO : MonoBehaviour
             if (MissionCounter == 200) spawner.difficultyLevel++; //About 3.7 minutes in
             if (MissionCounter == 250) spawner.difficultyLevel++; //About 4.6 minutes in
             if (MissionCounter == 5) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =300
-            if (MissionCounter == 20) StartCoroutine(nineMinutes()); //About 7.5 minutes in =420
-            if (MissionCounter == 60) StartCoroutine(endingArtillery()); //About 8 minutes in =450
+            if (MissionCounter == 420) StartCoroutine(nineMinutes()); //About 7.5 minutes in =420
+            if (MissionCounter == 450) StartCoroutine(endingArtillery()); //About 8 minutes in =450
             yield return new WaitForSeconds(1);
         }
 
@@ -288,6 +290,14 @@ public class CO : MonoBehaviour
         if (scoreMulti > 5f) scoreMulti += 0.2f;
         else scoreMulti += 1f;
     }
+    public void loseScore(int score, Vector3 pos)
+    {
+        playerScore -= score / Mathf.RoundToInt(scoreMulti);
+        POP Popup = Resources.Load<POP>("POP");
+        Vector3 rand = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
+        Instantiate(Popup, pos + rand, transform.rotation).InitPop(score); //Spawn damage popup
+        scoreNum.text = playerScore.ToString("000000000");
+    }
 
     IEnumerator sevenMinutes()
     {
@@ -351,7 +361,6 @@ public class CO : MonoBehaviour
         fadeScreen.SetActive(true);
         while (idleTime > 6f)
         {
-            
             while (Volumos > 0.2f)
             {
                 Volumos -= Time.deltaTime * 0.2f;
@@ -378,7 +387,18 @@ public class CO : MonoBehaviour
                 OST.pitch = Pitchos;
                 yield return null;
             }
-            //Ring in ears
+            //WE ARE AWAKE
+            if (MissionCounter < 419)
+            {
+                //Skip to Artillery Ending
+                MissionCounter = 419;
+                yield return new WaitForSeconds(6f);
+            }
+            scoreTexto.text = "MISSION: RUN EAST";
+            scoreNum.text = "";
+            idleTime = 0f;
+            becomeAlly = true;
+            StopCoroutine(goForPeace());
             yield return null;
         }
         fadeScreen.SetActive(false);
@@ -452,9 +472,17 @@ public class CO : MonoBehaviour
             yield return null;
         }
         gamePaused = true;
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         //Placeholder: Going to ENDING immediately
-        SceneManager.LoadScene("Ending");
+        if (becomeAlly) {
+            yield return new WaitForSeconds(2f);
+            endingText.text = "You survived.";
+            yield return new WaitForSeconds(4f);
+            SceneManager.LoadScene("Ending"); 
+        }
+        else { 
+            endingText.text = "You died gloriously! No one will remember you!\r\nSCORE: " + playerScore; 
+        }
     }
 
     public bool selfAware()
