@@ -11,9 +11,14 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public float adjustedDetectionDistance;
     public int placementNumber; // Placement number within the group
     public int scoreWorth = 100;
+    public float attackRate;
+    public float attackRange;
+    public float XOffset;
+    public float attackTimer;
+    public bool canAttack;
+    public LayerMask playerLayerMask;
     public int carryVoice; //0 = Nothing, 1 = Will Not Attack, 2 = Generic, 3 = Confronting
     //Only EnemyFast says voice lines (they are the Protestors) but other enemies are still able to enter Will Not Attack phase
-
 
     public GameObject playerObject;
     public GameObject DeathEffect;

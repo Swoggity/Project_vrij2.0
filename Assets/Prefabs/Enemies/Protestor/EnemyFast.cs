@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyFast : Enemy
 {
-    private float playerPosition;
+    private Vector3 playerPosition;
     public override void Die()
     {
         Quaternion rotation = Quaternion.Euler(-90f, 0f, 0f);
@@ -18,8 +18,25 @@ public class EnemyFast : Enemy
             transform.Translate(Vector2.left * speed * Time.deltaTime);
             doVoiceline();
         }
+        else if (isObstacleDetected)
+        {
+            if (canAttack)
+            {
+                AttackPlayer();
+                canAttack = false;
+                attackTimer = 0f;
+            }
+        }
+        if (!canAttack)
+        {
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackRate)
+            {
+                canAttack = true;
+            }
+        }
         DetectObstacle();
-        playerPosition = playerObject.transform.position.x;
+        playerPosition = playerObject.transform.position;
     }
 
     private void DetectObstacle()
@@ -29,20 +46,34 @@ public class EnemyFast : Enemy
             isObstacleDetected = false;
             return;
         }
-        if (transform.position.x <= playerPosition + adjustedDetectionDistance)
+        if (transform.position.x <= playerPosition.x + adjustedDetectionDistance)
         {
             isObstacleDetected = true;
         }
-        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 0.7f)
+        else if (transform.position.x >= playerPosition.x + adjustedDetectionDistance + 0.7f)
         {
             isObstacleDetected = false;
+        }
+    }
+    private void AttackPlayer()
+    {
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(new Vector3(playerPosition.x + XOffset, playerPosition.y, playerPosition.z), attackRange, playerLayerMask);
+        foreach (Collider2D playerCollider in hitPlayer)
+        {
+            IDamageable player = playerCollider.GetComponent<IDamageable>();
+            if (player != null)
+            {
+                //Code to lose points here
+                co.loseScore(10, playerPosition);
+                Debug.Log(this.name + " Is attacking");
+            }
         }
     }
 
     private void doVoiceline()
     {
         if (carryVoice < 2) return;
-        if (transform.position.x <= playerPosition + adjustedDetectionDistance +2)
+        if (transform.position.x <= playerPosition.x + adjustedDetectionDistance +2)
         {
             string[] voice = {""};
             Debug.Log("Doing voice!");

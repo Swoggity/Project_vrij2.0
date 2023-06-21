@@ -17,9 +17,9 @@ public class PlayerMovement : MonoBehaviour
         float moveDirection = 0f;
         if (!co.isGamePaused() && isMainPlayer) //If game is not paused, move by player input
         {
-            if (Input.GetKey(KeyCode.Z))
+            if (Input.GetKey(KeyCode.LeftArrow))
                 moveDirection = -moveSpeedBackMod; // Move left (more slowly)
-            if (Input.GetKey(KeyCode.C))
+            if (Input.GetKey(KeyCode.RightArrow))
                 moveDirection = 1f; // Move right
         } else
         {

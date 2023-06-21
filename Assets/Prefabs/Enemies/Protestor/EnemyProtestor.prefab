@@ -54,6 +54,14 @@ MonoBehaviour:
   adjustedDetectionDistance: 0
   placementNumber: 0
   scoreWorth: 100
+  attackRate: 0.75
+  attackRange: 0
+  XOffset: 0
+  attackTimer: 0
+  canAttack: 0
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   carryVoice: 0
   playerObject: {fileID: 0}
   DeathEffect: {fileID: 3187739233890719395, guid: 7135ba6a18c469d4bab5512ce55df71a, type: 3}

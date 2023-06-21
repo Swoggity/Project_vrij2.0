@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyRebel : Enemy
 {
-    private float playerPosition;
+    private Vector3 playerPosition;
 
     public override void Die()
     {
@@ -19,8 +19,25 @@ public class EnemyRebel : Enemy
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
         }
+        else if (isObstacleDetected)
+        {
+            if (canAttack)
+            {
+                AttackPlayer();
+                canAttack = false;
+                attackTimer = 0f;
+            }
+        }
+        if (!canAttack)
+        {
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackRate)
+            {
+                canAttack = true;
+            }
+        }
         DetectObstacle();
-        playerPosition = playerObject.transform.position.x;
+        playerPosition = playerObject.transform.position;
     }
 
     private void DetectObstacle()
@@ -30,14 +47,27 @@ public class EnemyRebel : Enemy
             isObstacleDetected = false;
             return;
         }
-        if (transform.position.x <= playerPosition + adjustedDetectionDistance)
+        if (transform.position.x <= playerPosition.x + adjustedDetectionDistance)
         {
             isObstacleDetected = true;
         }
-        else if (transform.position.x >= playerPosition + adjustedDetectionDistance + 1)
+        else if (transform.position.x >= playerPosition.x + adjustedDetectionDistance + 2f)
         {
             isObstacleDetected = false;
         }
     }
-
+    private void AttackPlayer()
+    {
+        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(new Vector3(playerPosition.x + XOffset, playerPosition.y, playerPosition.z), attackRange, playerLayerMask);
+        foreach (Collider2D playerCollider in hitPlayer)
+        {
+            IDamageable player = playerCollider.GetComponent<IDamageable>();
+            if (player != null)
+            {
+                //Code to lose points here
+                co.loseScore(20, playerPosition);
+                Debug.Log(this.name + " Is attacking");
+            }
+        }
+    }
 }

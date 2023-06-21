@@ -225,8 +225,8 @@ public class CO : MonoBehaviour
     IEnumerator tutorialMove()
     {
         tutorialPop.SetActive(true);
-        tutorialPopText.text = "Press Z and C to move!";
-        while (!Input.GetKeyDown(KeyCode.Z) && !Input.GetKeyDown(KeyCode.C) && MissionCounter < 20)
+        tutorialPopText.text = "Press <- and -> to move!";
+        while (!Input.GetKeyDown(KeyCode.LeftArrow) && !Input.GetKeyDown(KeyCode.RightArrow) && MissionCounter < 20)
         {
             yield return null;
         }
