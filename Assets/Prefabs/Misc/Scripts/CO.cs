@@ -56,9 +56,9 @@ public class CO : MonoBehaviour
                 mainOST(Resources.Load<AudioClip>("SFX/OST_Destroyer"), 0.8f, false);
             }
             if (MissionCounter == 2) StartCoroutine(tutorialMove());
-            if (MissionCounter == 30) { StartCoroutine(tutorialAbility()); abilitiesUnlocked++; Ability1.SetActive(true); }
+            if (MissionCounter == 1) { StartCoroutine(tutorialAbility()); abilitiesUnlocked++; Ability1.SetActive(true); } //20
             if (MissionCounter == 30) spawner.difficultyLevel++; //About 1.3 minutes in
-            if (MissionCounter == 60) { abilitiesUnlocked++; Ability2.SetActive(true); }
+            if (MissionCounter == 3) { abilitiesUnlocked++; Ability2.SetActive(true); } //60
             if (MissionCounter == 70) spawner.difficultyLevel++; //About X minutes in
             if (MissionCounter == 100) spawner.difficultyLevel++; //About 1.9 minutes in
             if (MissionCounter == 150) spawner.difficultyLevel++; //About 2.8 minutes in
@@ -387,11 +387,21 @@ public class CO : MonoBehaviour
             idleTime += Time.deltaTime;
             if (Input.GetKey(KeyCode.Space) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2)) idleTime = 0;
             Debug.Log(idleTime);
-            if (idleTime > 8f) StartCoroutine(enterPeace());
+            if (idleTime > 8f) { 
+                StartCoroutine(enterPeace());
+                StartCoroutine(drainScore());
+            }
             yield return null;
         }
     }
-
+    IEnumerator drainScore()
+    {
+        while (idleTime > 8f && playerScore > 0)
+        {
+            loseScore(100, player.transform.position);
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
     IEnumerator enterPeace()
     {
         float Volumos = 0.8f;
@@ -414,7 +424,6 @@ public class CO : MonoBehaviour
                     startRing = true;
                     //playSound(Resources.Load<AudioClip>("SFX/RingInEar"), false);
                 }
-                loseScore(5, player.transform.position);
                 yield return null;
             }
 
@@ -422,6 +431,7 @@ public class CO : MonoBehaviour
             if (idleTime > 8f)
             {
                 becomeAlly = true;
+                loseScore(playerScore, player.transform.position);
                 while (Volumos < 0.8f)
                 {
                     Volumos += Time.deltaTime * 0.2f;

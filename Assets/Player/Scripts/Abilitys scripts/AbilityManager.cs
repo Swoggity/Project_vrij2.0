@@ -20,21 +20,21 @@ public class AbilityManager : MonoBehaviour
 
             switch (abilityObject.name)
             {
+
                 case "Ability1":
                     // Behavior for Ability 1
-                    Debug.Log("Executing Ability 1");
-                    SpawnTower spawnTower = abilityObject.GetComponent<SpawnTower>();
-                    spawnTower.Activate();
-                    break;
-
-                case "Ability2":
-                    // Behavior for Ability 2
                     Debug.Log("Executing Ability 2");
                     ParryAbility parryAbility = abilityObject.GetComponent<ParryAbility>();
                     co = FindObjectOfType<CO>();
                     parryAbility.PlayerPosition = co.player.transform;
                     parryAbility.PerformParryAttack();
-                    // Add your code for Ability 2 here
+                    break;
+
+                case "Ability2":
+                    // Behavior for Ability 2
+                    Debug.Log("Executing Ability 1");
+                    SpawnTower spawnTower = abilityObject.GetComponent<SpawnTower>();
+                    spawnTower.Activate();
                     break;
 
                 case "Ability3":

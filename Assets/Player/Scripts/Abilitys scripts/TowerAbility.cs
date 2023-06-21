@@ -54,10 +54,11 @@ public class TowerAbility : MonoBehaviour
     {
         if (!stopFiring)
         {
-            Debug.Log("Im firing while isfiring is " + isFiring);
+            //Debug.Log("Im firing while isfiring is " + isFiring);
             Instantiate(muzzleFlash, barrelExit.position, Quaternion.identity);
 
             GameObject projectile = Instantiate(projectilePrefab, barrelExit.position, barrelExit.rotation);
+            playSound(Resources.Load<AudioClip>("SFX/MG_BEEFY_SHOT_" + Mathf.FloorToInt(Random.Range(1, 7)).ToString()));
             PlayerBullet projectileComponent = projectile.GetComponent<PlayerBullet>();
             if (projectileComponent != null)
             {
@@ -66,5 +67,9 @@ public class TowerAbility : MonoBehaviour
 
             nextFireTime = Time.time + fireRate;
         }
+    }
+    private void playSound(AudioClip clip)
+    {
+        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip, 0.1f, 1.0f, 1.0f);
     }
 }

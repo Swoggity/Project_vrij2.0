@@ -723,14 +723,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b08054d315fc8f47b513183e84fbbe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 15
+  health: 20
   armor: 0
   speed: 3
   isObstacleDetected: 0
   detectionDistance: 5
   adjustedDetectionDistance: 0
   placementNumber: 0
-  scoreWorth: 100
+  scoreWorth: 150
   carryVoice: 0
   playerObject: {fileID: 0}
   DeathEffect: {fileID: 8170834126473714016, guid: 49d00ae5e78101949a6058299b8097e4, type: 3}
