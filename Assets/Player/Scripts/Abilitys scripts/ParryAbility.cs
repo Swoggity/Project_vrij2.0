@@ -34,6 +34,7 @@ public class ParryAbility : MonoBehaviour
     // Draw the range of the parry attack in the scene view for debugging
     public void OnDrawGizmos()
     {
+        if (PlayerPosition == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(new Vector3(PlayerPosition.position.x + XOffset, PlayerPosition.position.y+ YOffset, PlayerPosition.position.z), range);
     }

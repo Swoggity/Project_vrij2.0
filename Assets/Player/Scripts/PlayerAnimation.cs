@@ -27,7 +27,7 @@ public class PlayerAnimation : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.Z)) moving = -moveSpeedBackMod;
                 if (Input.GetKey(KeyCode.C)) moving = 1;
-                if (Input.GetKey(KeyCode.Alpha2)) mAnimator.SetBool("Parry", true);
+                if (Input.GetKeyDown(KeyCode.Alpha2)) mAnimator.SetTrigger("Parry");
             }
             else
             {

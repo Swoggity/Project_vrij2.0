@@ -345,7 +345,7 @@ public class CO : MonoBehaviour
         while (!fadeScreen.activeSelf)
         {
             idleTime += Time.deltaTime;
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.W)) idleTime = 0;
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2)) idleTime = 0;
             if (idleTime > 6f) StartCoroutine(enterPeace());
             yield return null;
         }
