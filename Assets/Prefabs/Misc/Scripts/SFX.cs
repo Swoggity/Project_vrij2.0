@@ -6,14 +6,17 @@ public class SFX : MonoBehaviour
 {
     AudioSource source;
     bool isPlay = false;
+    float maxDur = 99f;
     void Update()
     {
         if (isPlay && source != null)
         {
             if (!source.isPlaying) Destroy(gameObject);
+            maxDur -= Time.deltaTime;
+            if (maxDur < 0f) Destroy(gameObject);
         }
     }
-    public void initSFX(AudioClip cli, float pitchshift, float volume) //Run after creating prefab
+    public void initSFX(AudioClip cli, float pitchshift, float volume, float maxdur) //Run after creating prefab
     {
         source = GetComponent<AudioSource>();
         source.clip = cli;
@@ -21,13 +24,14 @@ public class SFX : MonoBehaviour
         source.Play();
         source.loop = false;
         isPlay = true;
+        maxDur = maxdur;
     }
     public void initSFX(AudioClip clip, float pitchshift)
     {
-        initSFX(clip, 1f,1f);
+        initSFX(clip, 0f,1f,99f);
     }
     public void initSFX(AudioClip clip)
     {
-        initSFX(clip,1f,1f);
+        initSFX(clip,0f,1f,99f);
     }
 }

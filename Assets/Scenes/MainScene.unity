@@ -247,6 +247,7 @@ MonoBehaviour:
   spawner: {fileID: 2097985323}
   OST: {fileID: 953061585}
   transmissionUI: {fileID: 1812344425}
+  scoreTexto: {fileID: 0}
   scoreNum: {fileID: 1316588690}
 --- !u!4 &272966744
 Transform:
@@ -2883,8 +2884,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0b19aae371242a842883f8de11c1ea42, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

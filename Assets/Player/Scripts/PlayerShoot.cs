@@ -66,6 +66,6 @@ public class PlayerShoot : MonoBehaviour
 
     private void playSound(AudioClip clip)
     {
-        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip);
+        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip,0.1f,1.0f,1.0f);
     }
 }
