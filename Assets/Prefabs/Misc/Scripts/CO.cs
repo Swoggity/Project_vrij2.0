@@ -23,7 +23,7 @@ public class CO : MonoBehaviour
     [SerializeField] GameObject propaScreen;
     float fadeTutorial = 0.0f;
     [SerializeField] GameObject tutorialPop; //This screen tells the player to shoot
-    [SerializeField] GameObject player;
+    public GameObject player;
     [SerializeField] EnemySpawner spawner;
     [SerializeField] AudioSource OST;
     [SerializeField] GameObject transmissionUI;
@@ -169,7 +169,7 @@ public class CO : MonoBehaviour
             yield return null;
         }
         player.GetComponent<PlayerMovement>().leftLimit = 50;
-        player.GetComponent<PlayerMovement>().rightLimit = 150;
+        player.GetComponent<PlayerMovement>().rightLimit = 250;
         cinematicMoveOverride = 0f;
         yield return new WaitForSeconds(5);
         tutorialPop.SetActive(true);
@@ -346,7 +346,7 @@ public class CO : MonoBehaviour
         {
             idleTime += Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2)) idleTime = 0;
-            if (idleTime > 6f) StartCoroutine(enterPeace());
+            if (idleTime > 8f) StartCoroutine(enterPeace());
             yield return null;
         }
     }
@@ -359,7 +359,7 @@ public class CO : MonoBehaviour
         Image fadeim = fadeScreen.GetComponent<Image>();
         fadeim.sprite = Resources.Load<Sprite>("Vinai");
         fadeScreen.SetActive(true);
-        while (idleTime > 6f)
+        while (idleTime > 8f)
         {
             while (Volumos > 0.2f)
             {
@@ -377,7 +377,7 @@ public class CO : MonoBehaviour
             }
 
             yield return new WaitForSeconds(2f);
-            isSelfAware = true;
+            becomeAlly = true;
             while (Volumos < 0.8f)
             {
                 Volumos += Time.deltaTime * 0.2f;
@@ -388,15 +388,14 @@ public class CO : MonoBehaviour
                 yield return null;
             }
             //WE ARE AWAKE
-            becomeAlly = true;
             if (MissionCounter < 419)
             {
                 //Skip to Artillery Ending
                 MissionCounter = 419;
                 yield return new WaitForSeconds(6f);
             }
-            scoreTexto.text = "MISSION: RUN EAST";
-            scoreNum.text = "";
+            scoreTexto.text = "RUN";
+            scoreNum.text = "EAST";
             idleTime = 0f;
             StopCoroutine(goForPeace());
             yield return null;

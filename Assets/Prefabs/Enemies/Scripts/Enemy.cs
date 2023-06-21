@@ -24,6 +24,11 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         co = FindObjectOfType<CO>();
         playerObject = GameObject.FindWithTag("Player");
         adjustedDetectionDistance = detectionDistance + ((placementNumber + Random.Range(0.5f, 1.5f)) * 1f); // Adjust detection distance based on placement number
+        if (co.becomeAlly)
+        {
+            speed *= -0.5f;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, 1);
+        }
     }
 
     public void SetPlacementNumber(int placementNumber)

@@ -11,11 +11,12 @@ public class AbilityManager : MonoBehaviour
         public bool isLocked = true;
         public KeyCode button;
         [HideInInspector] public AbilityPlaceholder abilityPlaceholder;
-
+        
         public void ExecuteAbility()
         {
             // Define the behavior of the ability here
             // Replace this method with the specific behavior for each ability
+            CO co;
 
             switch (abilityObject.name)
             {
@@ -30,6 +31,8 @@ public class AbilityManager : MonoBehaviour
                     // Behavior for Ability 2
                     Debug.Log("Executing Ability 2");
                     ParryAbility parryAbility = abilityObject.GetComponent<ParryAbility>();
+                    co = FindObjectOfType<CO>();
+                    parryAbility.PlayerPosition = co.player.transform;
                     parryAbility.PerformParryAttack();
                     // Add your code for Ability 2 here
                     break;
@@ -54,10 +57,12 @@ public class AbilityManager : MonoBehaviour
     }
 
     public AbilityData[] abilities;
+    CO co;
 
     private void Start()
     {
         // Initialize ability UI and attach the AbilityPlaceholder script
+        co = FindObjectOfType<CO>();
         foreach (AbilityData abilityData in abilities)
         {
             if (abilityData.abilityObject != null)
@@ -70,6 +75,8 @@ public class AbilityManager : MonoBehaviour
     private void Update()
     {
         // Check for key presses to trigger abilities
+        if (co.isGamePaused()) return;
+
         for (int i = 0; i < abilities.Length; i++)
         {
             if (Input.GetKeyDown(abilities[i].button))
