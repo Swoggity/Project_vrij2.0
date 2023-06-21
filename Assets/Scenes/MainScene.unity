@@ -289,12 +289,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - abilityObject: {fileID: 722657456}
-    speed: 0.05
+    speed: 1
     isLocked: 0
     button: 49
     abilityPlaceholder: {fileID: 0}
   - abilityObject: {fileID: 722657457}
-    speed: 1
+    speed: 0.1
     isLocked: 0
     button: 50
     abilityPlaceholder: {fileID: 0}
@@ -4546,7 +4546,10 @@ MonoBehaviour:
       enemyCount: 2
   - enemySpawnData:
     - enemyPrefab: {fileID: 4424843562079874801, guid: a9b11816360da9740b072dd196feda4b, type: 3}
-      enemyCount: 2
+      enemyCount: 3
+  - enemySpawnData:
+    - enemyPrefab: {fileID: 4424843562079874801, guid: a9b11816360da9740b072dd196feda4b, type: 3}
+      enemyCount: 3
     - enemyPrefab: {fileID: 3231253766099528216, guid: 0c5e61b55a3b9b64baeb7af825a03aea, type: 3}
       enemyCount: 1
   - enemySpawnData:
@@ -4559,6 +4562,16 @@ MonoBehaviour:
       enemyCount: 1
     - enemyPrefab: {fileID: 4424843562079874801, guid: a9b11816360da9740b072dd196feda4b, type: 3}
       enemyCount: 1
+  - enemySpawnData:
+    - enemyPrefab: {fileID: 3231253766099528216, guid: 0c5e61b55a3b9b64baeb7af825a03aea, type: 3}
+      enemyCount: 4
+    - enemyPrefab: {fileID: 4424843562079874801, guid: a9b11816360da9740b072dd196feda4b, type: 3}
+      enemyCount: 2
+  - enemySpawnData:
+    - enemyPrefab: {fileID: 2204750227203436758, guid: 6edb320afc7c65844af9517c71910296, type: 3}
+      enemyCount: 1
+    - enemyPrefab: {fileID: 4424843562079874801, guid: a9b11816360da9740b072dd196feda4b, type: 3}
+      enemyCount: 3
   waveTimer: 0
 --- !u!114 &2097985324
 MonoBehaviour:

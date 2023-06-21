@@ -56,14 +56,16 @@ public class CO : MonoBehaviour
                 mainOST(Resources.Load<AudioClip>("SFX/OST_Destroyer"), 0.8f, false);
             }
             if (MissionCounter == 2) StartCoroutine(tutorialMove());
-            if (MissionCounter == 40) { StartCoroutine(tutorialAbility()); abilitiesUnlocked++; Ability1.SetActive(true); }
-            if (MissionCounter == 50) spawner.difficultyLevel++; //About 1.3 minutes in
-            if (MissionCounter == 90) { abilitiesUnlocked++; Ability2.SetActive(true); }
+            if (MissionCounter == 30) { StartCoroutine(tutorialAbility()); abilitiesUnlocked++; Ability1.SetActive(true); }
+            if (MissionCounter == 30) spawner.difficultyLevel++; //About 1.3 minutes in
+            if (MissionCounter == 60) { abilitiesUnlocked++; Ability2.SetActive(true); }
+            if (MissionCounter == 70) spawner.difficultyLevel++; //About X minutes in
             if (MissionCounter == 100) spawner.difficultyLevel++; //About 1.9 minutes in
             if (MissionCounter == 150) spawner.difficultyLevel++; //About 2.8 minutes in
-            if (MissionCounter == 200) spawner.difficultyLevel++; //About 3.7 minutes in
+            if (MissionCounter == 180) spawner.difficultyLevel++; //About 3.7 minutes in
+            if (MissionCounter == 210) spawner.difficultyLevel++; //About X minutes in
             if (MissionCounter == 250) spawner.difficultyLevel++; //About 4.6 minutes in
-            if (MissionCounter == 5) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =300
+            if (MissionCounter == 300) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =300
             if (MissionCounter == 420) StartCoroutine(nineMinutes()); //About 7.5 minutes in =420
             if (MissionCounter == 450) StartCoroutine(endingArtillery()); //About 8 minutes in =450
             yield return new WaitForSeconds(1);
@@ -82,8 +84,8 @@ public class CO : MonoBehaviour
         }
         if (scoreMulti > 1.0f)
         {
-            //scoreMulti -= Time.deltaTime*0.2f;
-            if (scoreMulti > 4f) scoreMulti -= Time.deltaTime * 0.2f;
+            scoreMulti -= Time.deltaTime*0.6f;
+            if (scoreMulti > 4f) scoreMulti -= Time.deltaTime * 0.6f;
         }
     }
 
@@ -224,7 +226,7 @@ public class CO : MonoBehaviour
     {
         tutorialPop.SetActive(true);
         tutorialPopText.text = "Press Z and C to move!";
-        while ((!Input.GetKeyDown(KeyCode.Z) && Input.GetKeyDown(KeyCode.C)) && MissionCounter < 20)
+        while (!Input.GetKeyDown(KeyCode.Z) && !Input.GetKeyDown(KeyCode.C) && MissionCounter < 20)
         {
             yield return null;
         }
@@ -319,7 +321,8 @@ public class CO : MonoBehaviour
     }
     public void addScore(int score, Vector3 pos)
     {
-        playerScore += score* Mathf.RoundToInt(scoreMulti);
+        score = Mathf.RoundToInt(score*scoreMulti);
+        playerScore += score;
         POP Popup = Resources.Load<POP>("POP");
         Vector3 rand = new Vector3(Random.Range(-0.5f,0.5f), Random.Range(-0.5f, 0.5f), 0);
         Instantiate(Popup, pos+rand, transform.rotation).InitPop(score); //Spawn damage popup
