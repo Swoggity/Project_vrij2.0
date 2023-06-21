@@ -388,6 +388,7 @@ public class CO : MonoBehaviour
                 yield return null;
             }
             //WE ARE AWAKE
+            becomeAlly = true;
             if (MissionCounter < 419)
             {
                 //Skip to Artillery Ending
@@ -397,7 +398,6 @@ public class CO : MonoBehaviour
             scoreTexto.text = "MISSION: RUN EAST";
             scoreNum.text = "";
             idleTime = 0f;
-            becomeAlly = true;
             StopCoroutine(goForPeace());
             yield return null;
         }
