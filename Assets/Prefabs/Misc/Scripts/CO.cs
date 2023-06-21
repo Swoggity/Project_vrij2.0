@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,11 +28,12 @@ public class CO : MonoBehaviour
     [SerializeField] AudioSource OST;
     [SerializeField] GameObject transmissionUI;
     Vector3 transmissionAnchor;
-    [SerializeField] GameObject ArtilleryPrefab;
+    [SerializeField] TextMeshProUGUI scoreNum;
     bool isSelfAware = false;
     bool gamePaused = true;
     float cinematicMoveOverride = 0f;
     int playerScore = 0;
+    float scoreMulti = 1.0f;
     IEnumerator CountMission()
     {
         while (MissionCounter < 600)
@@ -67,6 +69,11 @@ public class CO : MonoBehaviour
                 StartCoroutine(StartMission());
             }
         }
+        if (scoreMulti > 1.0f)
+        {
+            scoreMulti -= Time.deltaTime*0.5f;
+            if (scoreMulti > 4f) scoreMulti -= Time.deltaTime * 0.5f;
+        }
     }
 
     private void Start()
@@ -93,21 +100,33 @@ public class CO : MonoBehaviour
             startScreen.GetComponent<Image>().color = new Color(1, 1, 1, startAlpha);
             yield return null;
         }
-        cinematicMoveOverride = 0.4f;
+        cinematicMoveOverride = 0.37f;
         yield return new WaitForSeconds(1);
         //Propaganda opening HERE
-        playSound(Resources.Load<AudioClip>("SFX/OST_Title"), false);
-        Sprite[] spritlist = { null };
+        Sprite[] spritlist = {
+            Resources.Load<Sprite>("Sprites/Propa1"),
+            Resources.Load<Sprite>("Sprites/Propa2"),
+            Resources.Load<Sprite>("Sprites/Propa3"),
+            Resources.Load<Sprite>("Sprites/Propa4")
+        };
         int Change = 0;
         propaScreen.SetActive(true);
+        int Previous = 0;
 
-        while (Change < 12)
+        while (Change < 20)
         {
+            yield return new WaitForSeconds(0.1f);
             Change++;
-            propaScreen.GetComponent<Image>().sprite = spritlist[Mathf.FloorToInt(Random.Range(0, spritlist.Length))];
-            yield return new WaitForSeconds(0.2f);
+            playSound(Resources.Load<AudioClip>("SFX/MG_BEEFY_SHOT_"+Mathf.FloorToInt(Random.Range(1,7)).ToString()), false);
+            int ren = Mathf.FloorToInt(Random.Range(0, spritlist.Length));
+            if (ren == Previous) ren++;
+            if (ren >= spritlist.Length) ren = 0;
+            Previous = ren;
+            propaScreen.GetComponent<Image>().sprite = spritlist[ren];
         }
+        playSound(Resources.Load<AudioClip>("SFX/OST_Title"), false);
         propaScreen.SetActive(false);
+        yield return new WaitForSeconds(2.5f);
         StartCoroutine(StartMissionCam());
         while (fadeAlpha > 0.0f)
         {
@@ -150,7 +169,7 @@ public class CO : MonoBehaviour
         cinematicMoveOverride = 0f;
         yield return new WaitForSeconds(5);
         tutorialPop.SetActive(true);
-        fadeTutorial = 0.0f;
+        fadeTutorial = 1.0f;
         StartCoroutine(fadeTut());
         while (!Input.GetKey(KeyCode.Space))
         {
@@ -219,10 +238,11 @@ public class CO : MonoBehaviour
     }
     IEnumerator fadeTut()
     {
+        fadeTutorial = 0f;
         while (fadeTutorial < 1 && tutorialPop.activeSelf)
         {
             fadeTutorial += Time.deltaTime * 0.5f;
-            tutorialPop.GetComponent<Image>().color = new Color(1, 1, 1, fadeTutorial);
+            tutorialPop.GetComponent<Image>().color = new Color(0, 0, 0, fadeTutorial);
             yield return null;
         }
     }
@@ -258,10 +278,13 @@ public class CO : MonoBehaviour
     }
     public void addScore(int score, Vector3 pos)
     {
-        playerScore += score;
+        playerScore += score* Mathf.RoundToInt(scoreMulti);
         POP Popup = Resources.Load<POP>("POP");
         Vector3 rand = new Vector3(Random.Range(-0.5f,0.5f), Random.Range(-0.5f, 0.5f), 0);
         Instantiate(Popup, pos+rand, transform.rotation).InitPop(score); //Spawn damage popup
+        scoreNum.text = playerScore.ToString("000000000");
+        if (scoreMulti > 5f) scoreMulti += 0.2f;
+        else scoreMulti += 1f;
     }
 
     IEnumerator sevenMinutes()
@@ -314,7 +337,7 @@ public class CO : MonoBehaviour
         }
         //Play Voiceline?
         //Move position of Transmission upward
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(9f);
         while (transmissionUI.transform.position.y < transmissionAnchor.y)
         {
             transmissionUI.transform.position = new Vector3(transmissionUI.transform.position.x, transmissionUI.transform.position.y + (225 * Time.deltaTime * 0.5f), 0);
