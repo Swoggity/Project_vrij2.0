@@ -1091,13 +1091,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.1
-  damage: 4
+  damage: 8
   speed: 8
   barrelExit: {fileID: 2761502381105484746}
   hitMarker: {fileID: 3096887676017900699, guid: 760645cec5d15ff458cff07a027a4936, type: 3}
   muzzleFlash: {fileID: 1668266075837510865, guid: 53ca4fcde24d6944bbdfb1a2d82766c7, type: 3}
   projectilePrefab: {fileID: 3755785189026475070, guid: 0323544585cd7724db395e67c6715e79, type: 3}
-  endTime: 2
+  endTime: 4.2
 --- !u!1 &5368534248285562001
 GameObject:
   m_ObjectHideFlags: 0

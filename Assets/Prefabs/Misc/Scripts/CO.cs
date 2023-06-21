@@ -65,7 +65,7 @@ public class CO : MonoBehaviour
             if (MissionCounter == 180) spawner.difficultyLevel++; //About 3.7 minutes in
             if (MissionCounter == 210) spawner.difficultyLevel++; //About X minutes in
             if (MissionCounter == 250) spawner.difficultyLevel++; //About 4.6 minutes in
-            if (MissionCounter == 300) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =300
+            if (MissionCounter == 5) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =300
             if (MissionCounter == 420) StartCoroutine(nineMinutes()); //About 7.5 minutes in =420
             if (MissionCounter == 450) StartCoroutine(endingArtillery()); //About 8 minutes in =450
             yield return new WaitForSeconds(1);
@@ -335,8 +335,10 @@ public class CO : MonoBehaviour
         playerScore -= score / Mathf.RoundToInt(scoreMulti);
         POP Popup = Resources.Load<POP>("POP");
         Vector3 rand = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
-        Instantiate(Popup, pos + rand, transform.rotation).InitPop(score); //Spawn damage popup
+        Instantiate(Popup, pos + rand, transform.rotation).InitPop(-score); //Spawn damage popup
         scoreNum.text = playerScore.ToString("000000000");
+        if (scoreMulti > 1.2f) scoreMulti -= 0.2f;
+        else scoreMulti = 1f;
     }
 
     IEnumerator sevenMinutes()
@@ -489,7 +491,7 @@ public class CO : MonoBehaviour
         fadeim.color = new Color(1, 1, 1, fadeToWhite);
 
         //Spawn background artillery first
-        int Arts = 10;
+        /*int Arts = 10;
         while (Arts > 0)
         {
             Arts--;
@@ -498,15 +500,15 @@ public class CO : MonoBehaviour
             Instantiate(Resources.Load<GameObject>("ArtilleryImpactCinematicBack"), vec, Quaternion.identity);
             yield return new WaitForSeconds(0.2f);
         }
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(4);*/
         //Then spawn foreground artillery
-        Arts = 10;
+        int Arts = 10;
         while (Arts > 0)
         {
             Arts--;
             //Spawn Arty Foreground
             Vector3 vec = player.transform.position + new Vector3(Random.Range(-10, 18), -0.6f, 0);
-            Instantiate(Resources.Load<GameObject>("ArtilleryImpactCinematic"), vec, Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>("CinematicArtilleryFixFront"), vec, Quaternion.identity);
             yield return new WaitForSeconds(0.2f);
         }
         //5 second impact delay
