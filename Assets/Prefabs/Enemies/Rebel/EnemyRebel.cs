@@ -25,6 +25,11 @@ public class EnemyRebel : Enemy
 
     private void DetectObstacle()
     {
+        if (co.becomeAlly)
+        {
+            isObstacleDetected = false;
+            return;
+        }
         if (transform.position.x <= playerPosition + adjustedDetectionDistance)
         {
             isObstacleDetected = true;
