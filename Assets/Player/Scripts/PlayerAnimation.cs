@@ -27,7 +27,7 @@ public class PlayerAnimation : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.Z)) moving = -moveSpeedBackMod;
                 if (Input.GetKey(KeyCode.C)) moving = 1;
-                if (Input.GetKeyDown(KeyCode.Alpha2)) mAnimator.SetTrigger("Parry");
+                if (Input.GetKeyDown(KeyCode.Alpha1) && co.abilitiesUnlocked > 0 && !co.becomeAlly) mAnimator.SetTrigger("Parry");
             }
             else
             {

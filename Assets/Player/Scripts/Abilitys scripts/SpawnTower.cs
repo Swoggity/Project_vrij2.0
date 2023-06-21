@@ -13,7 +13,7 @@ public class SpawnTower : MonoBehaviour
         if (player != null)
         {
             //tower pivit offset x-14.24 y-0.22 z1.64
-            Instantiate(towerPrefab, new Vector3 (player.transform.position.x + 14.24f + TowerXOffset, player.transform.position.y+ 0.22f + 1.55f, player.transform.position.z + 2), Quaternion.identity);
+            Instantiate(towerPrefab, new Vector3 (player.transform.position.x + 14.24f + TowerXOffset, player.transform.position.y+ 0.22f + 1.55f, player.transform.position.z + 0), Quaternion.identity);
         }
         else
         {

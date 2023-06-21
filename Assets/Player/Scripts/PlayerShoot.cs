@@ -21,7 +21,7 @@ public class PlayerShoot : MonoBehaviour
     }
     private void Update()
     {
-        if (co.isGamePaused()) return;
+        if (co.isGamePaused() || co.becomeAlly) return;
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFireTime)
         {
             isFiring = true;

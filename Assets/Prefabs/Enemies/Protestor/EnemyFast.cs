@@ -74,6 +74,18 @@ public class EnemyFast : Enemy
                         "Leave us alone!"
                     };
                     break;
+                case 4:
+                    //Confronting
+                    voice = new string[]
+                    {
+                        "Please stop!",
+                        "Stop shooting!",
+                        "Don't hurt us!",
+                        "We want only peace!",
+                        "Stop!",
+                        "Leave us alone!"
+                    };
+                    break;
             }
             int rr = Mathf.FloorToInt(Random.Range(0, voice.Length));
             Instantiate(Resources.Load<VOICE>("VOICE"),transform.position+new Vector3(0,5,0),transform.rotation).setVoiceLine(voice[rr],carryVoice == 3); //Load Voice prefab

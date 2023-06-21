@@ -31,11 +31,15 @@ public class CO : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreTexto;
     [SerializeField] TextMeshProUGUI scoreNum;
     [SerializeField] TextMeshProUGUI endingText;
+    [SerializeField] TextMeshProUGUI tutorialPopText;
+    [SerializeField] GameObject Ability1;
+    [SerializeField] GameObject Ability2;
     bool isSelfAware = false;
     public bool becomeAlly = false;
     bool gamePaused = true;
     float cinematicMoveOverride = 0f;
     int playerScore = 0;
+    public int abilitiesUnlocked = 0;
     float scoreMulti = 1.0f;
     float idleTime = 0f;
     IEnumerator CountMission()
@@ -51,7 +55,10 @@ public class CO : MonoBehaviour
             {
                 mainOST(Resources.Load<AudioClip>("SFX/OST_Destroyer"), 0.8f, false);
             }
+            if (MissionCounter == 2) StartCoroutine(tutorialMove());
+            if (MissionCounter == 40) { StartCoroutine(tutorialAbility()); abilitiesUnlocked++; Ability1.SetActive(true); }
             if (MissionCounter == 50) spawner.difficultyLevel++; //About 1.3 minutes in
+            if (MissionCounter == 90) { abilitiesUnlocked++; Ability2.SetActive(true); }
             if (MissionCounter == 100) spawner.difficultyLevel++; //About 1.9 minutes in
             if (MissionCounter == 150) spawner.difficultyLevel++; //About 2.8 minutes in
             if (MissionCounter == 200) spawner.difficultyLevel++; //About 3.7 minutes in
@@ -75,8 +82,8 @@ public class CO : MonoBehaviour
         }
         if (scoreMulti > 1.0f)
         {
-            scoreMulti -= Time.deltaTime*0.3f;
-            if (scoreMulti > 4f) scoreMulti -= Time.deltaTime * 0.3f;
+            //scoreMulti -= Time.deltaTime*0.2f;
+            if (scoreMulti > 4f) scoreMulti -= Time.deltaTime * 0.2f;
         }
     }
 
@@ -169,7 +176,7 @@ public class CO : MonoBehaviour
             yield return null;
         }
         player.GetComponent<PlayerMovement>().leftLimit = 50;
-        player.GetComponent<PlayerMovement>().rightLimit = 250;
+        player.GetComponent<PlayerMovement>().rightLimit = 350;
         cinematicMoveOverride = 0f;
         yield return new WaitForSeconds(5);
         tutorialPop.SetActive(true);
@@ -213,6 +220,27 @@ public class CO : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
+    IEnumerator tutorialMove()
+    {
+        tutorialPop.SetActive(true);
+        tutorialPopText.text = "Press Z and C to move!";
+        while ((!Input.GetKeyDown(KeyCode.Z) && Input.GetKeyDown(KeyCode.C)) && MissionCounter < 20)
+        {
+            yield return null;
+        }
+        tutorialPop.SetActive(false);
+        if (MissionCounter > 10) MissionCounter = 10;
+    }
+    IEnumerator tutorialAbility()
+    {
+        tutorialPop.SetActive(true);
+        tutorialPopText.text = "Press (1) for ability!";
+        while (!Input.GetKeyDown(KeyCode.Alpha1) && MissionCounter < 80)
+        {
+            yield return null;
+        }
+        tutorialPop.SetActive(false);
+    }
     public void playSound(AudioClip cli, bool loop)
     {
         AudioSource source = GetComponent<AudioSource>();
@@ -246,9 +274,10 @@ public class CO : MonoBehaviour
         while (fadeTutorial < 1 && tutorialPop.activeSelf)
         {
             fadeTutorial += Time.deltaTime * 0.5f;
-            tutorialPop.GetComponent<Image>().color = new Color(0, 0, 0, fadeTutorial);
+            tutorialPop.GetComponent<Image>().color = new Color(1, 1, 1, fadeTutorial);
             yield return null;
         }
+        tutorialPop.GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
 
     IEnumerator StartMissionCam()
@@ -345,7 +374,8 @@ public class CO : MonoBehaviour
         while (!fadeScreen.activeSelf)
         {
             idleTime += Time.deltaTime;
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2)) idleTime = 0;
+            if (Input.GetKey(KeyCode.Space) || Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2)) idleTime = 0;
+            Debug.Log(idleTime);
             if (idleTime > 8f) StartCoroutine(enterPeace());
             yield return null;
         }
@@ -361,44 +391,48 @@ public class CO : MonoBehaviour
         fadeScreen.SetActive(true);
         while (idleTime > 8f)
         {
-            while (Volumos > 0.2f)
+            while (Volumos > 0.2f && idleTime > 8f)
             {
-                Volumos -= Time.deltaTime * 0.2f;
-                Pitchos -= Time.deltaTime * 0.1f;
+                Volumos -= Time.deltaTime * 0.1f;
+                Pitchos -= Time.deltaTime * 0.05f;
                 fadeim.color = new Color(1, 1, 1, 0.8f - Volumos);
                 setMainOSTVolume(Volumos);
                 OST.pitch = Pitchos;
                 if (Volumos < 0.5f && !startRing)
                 {
                     startRing = true;
-                    playSound(Resources.Load<AudioClip>("SFX/RingInEar"), false);
+                    //playSound(Resources.Load<AudioClip>("SFX/RingInEar"), false);
                 }
+                loseScore(5, player.transform.position);
                 yield return null;
             }
 
             yield return new WaitForSeconds(2f);
-            becomeAlly = true;
-            while (Volumos < 0.8f)
+            if (idleTime > 8f)
             {
-                Volumos += Time.deltaTime * 0.2f;
-                Pitchos += Time.deltaTime * 0.1f;
-                fadeim.color = new Color(1, 1, 1, 0.8f - Volumos);
-                setMainOSTVolume(Volumos);
-                OST.pitch = Pitchos;
+                becomeAlly = true;
+                while (Volumos < 0.8f)
+                {
+                    Volumos += Time.deltaTime * 0.2f;
+                    Pitchos += Time.deltaTime * 0.05f; //0.1f to end up even/properly
+                    fadeim.color = new Color(1, 1, 1, 0.8f - Volumos);
+                    setMainOSTVolume(Volumos);
+                    OST.pitch = Pitchos;
+                    yield return null;
+                }
+                //WE ARE AWAKE
+                if (MissionCounter < 419)
+                {
+                    //Skip to Artillery Ending
+                    MissionCounter = 419;
+                    yield return new WaitForSeconds(6f);
+                }
+                scoreTexto.text = "RUN";
+                scoreNum.text = "EAST";
+                idleTime = 0f;
+                StopCoroutine(goForPeace());
                 yield return null;
             }
-            //WE ARE AWAKE
-            if (MissionCounter < 419)
-            {
-                //Skip to Artillery Ending
-                MissionCounter = 419;
-                yield return new WaitForSeconds(6f);
-            }
-            scoreTexto.text = "RUN";
-            scoreNum.text = "EAST";
-            idleTime = 0f;
-            StopCoroutine(goForPeace());
-            yield return null;
         }
         fadeScreen.SetActive(false);
         setMainOSTVolume(1);
