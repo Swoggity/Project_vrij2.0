@@ -53,7 +53,7 @@ public class CO : MonoBehaviour
             }
             if (!OST.isPlaying)
             {
-                mainOST(Resources.Load<AudioClip>("SFX/OST_Destroyer"), 0.8f, false);
+                mainOST(Resources.Load<AudioClip>("SFX/OST_Destroyer"), 1.0f, false);
             }
             if (MissionCounter == 2) StartCoroutine(tutorialMove());
             if (MissionCounter == 15) { StartCoroutine(tutorialAbility()); abilitiesUnlocked++; Ability1.SetActive(true); } //20
@@ -64,9 +64,9 @@ public class CO : MonoBehaviour
             if (MissionCounter == 150) spawner.difficultyLevel++; //About 2.8 minutes in
             if (MissionCounter == 180) spawner.difficultyLevel++; //About 3.7 minutes in
             if (MissionCounter == 210) spawner.difficultyLevel++; //About X minutes in
-            if (MissionCounter == 1) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =210
+            if (MissionCounter == 210) StartCoroutine(sevenMinutes()); //About 5.5 minutes in =210
             if (MissionCounter == 330) StartCoroutine(nineMinutes()); //About 7.5 minutes in =330
-            if (MissionCounter == 360) StartCoroutine(endingArtillery()); //About 6 minutes in =360
+            if (MissionCounter == 350) StartCoroutine(endingArtillery()); //About 6 minutes in =350
             yield return new WaitForSeconds(1);
         }
 
@@ -83,8 +83,8 @@ public class CO : MonoBehaviour
         }
         if (scoreMulti > 1.0f)
         {
-            scoreMulti -= Time.deltaTime*0.5f;
-            if (scoreMulti > 4f) scoreMulti -= Time.deltaTime * 0.5f;
+            scoreMulti -= Time.deltaTime*0.6f;
+            if (scoreMulti > 4f) scoreMulti -= Time.deltaTime * 0.6f;
         }
     }
 
@@ -225,7 +225,7 @@ public class CO : MonoBehaviour
     {
         tutorialPop.SetActive(true);
         tutorialPopText.text = "Press -> to move!";
-        while (!Input.GetKeyDown(KeyCode.LeftArrow) && !Input.GetKeyDown(KeyCode.RightArrow) && MissionCounter < 20)
+        while (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && MissionCounter < 20)
         {
             yield return null;
         }
@@ -236,7 +236,7 @@ public class CO : MonoBehaviour
     {
         tutorialPop.SetActive(true);
         tutorialPopText.text = "Press (1) for ability!";
-        while (!Input.GetKeyDown(KeyCode.Alpha1) && MissionCounter < 80)
+        while (!Input.GetKey(KeyCode.Alpha1) && MissionCounter < 80)
         {
             yield return null;
         }
@@ -399,7 +399,7 @@ public class CO : MonoBehaviour
     {
         while (idleTime > 8f && playerScore > 0)
         {
-            loseScore(1200, player.transform.position);
+            loseScore(1000, player.transform.position+new Vector3(0,4,0));
             yield return new WaitForSeconds(0.3f);
         }
     }
@@ -432,7 +432,7 @@ public class CO : MonoBehaviour
             if (idleTime > 8f)
             {
                 becomeAlly = true;
-                loseScore(playerScore, player.transform.position);
+                loseScore(playerScore, player.transform.position + new Vector3(0, 4, 0));
                 while (Volumos < 0.8f)
                 {
                     Volumos += Time.deltaTime * 0.2f;
@@ -507,7 +507,7 @@ public class CO : MonoBehaviour
             Arts--;
             //Spawn Arty Foreground
             Vector3 vec = player.transform.position + new Vector3(Random.Range(-10, 18), -0.6f, 0);
-            Instantiate(Resources.Load<GameObject>("VFX/CinematicArtilleryFixFront"), vec, Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>("CinematicArtilleryFixFront"), vec, Quaternion.identity);
             yield return new WaitForSeconds(0.2f);
         }
         //5 second impact delay

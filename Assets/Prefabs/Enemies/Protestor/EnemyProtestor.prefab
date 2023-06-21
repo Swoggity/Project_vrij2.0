@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ccc81140948064b917267c6a8cfec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 35
+  health: 30
   armor: 0
   speed: 4
   isObstacleDetected: 0

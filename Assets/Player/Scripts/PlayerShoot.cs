@@ -22,16 +22,17 @@ public class PlayerShoot : MonoBehaviour
     private void Update()
     {
         if (co.isGamePaused() || co.becomeAlly) return;
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFireTime)
+        if (Input.GetKey(KeyCode.Space) && Time.time > nextFireTime && !isFiring)
         {
             isFiring = true;
             Fire();
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) && isFiring)
         {
             isFiring = false;
             playSound(Resources.Load<AudioClip>("SFX/MG_MOUSE-UP"));
+            nextFireTime += cooldownTime;
         }
 
         if (isFiring && Time.time > nextFireTime)
@@ -58,14 +59,10 @@ public class PlayerShoot : MonoBehaviour
         projectile.transform.rotation = spreadRotation;
 
         nextFireTime = Time.time + fireRate;
-        if (!isFiring)
-        {
-            nextFireTime += cooldownTime;
-        }
     }
 
     private void playSound(AudioClip clip)
     {
-        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip,0.1f,0.5f,1.0f);
+        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip,0.1f,0.4f,1.0f);
     }
 }

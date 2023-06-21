@@ -21,6 +21,7 @@ public class SFX : MonoBehaviour
         source = GetComponent<AudioSource>();
         source.clip = cli;
         source.pitch = Random.Range(1 - pitchshift, 1 + pitchshift);
+        source.volume = volume;
         source.Play();
         source.loop = false;
         isPlay = true;

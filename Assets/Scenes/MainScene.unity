@@ -3628,7 +3628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2852616364312708035, guid: d843dc70296792e49bc1b6e11cbb03cb, type: 3}
       propertyPath: cooldownTime
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2852616364312708092, guid: d843dc70296792e49bc1b6e11cbb03cb, type: 3}
       propertyPath: rightLimit
