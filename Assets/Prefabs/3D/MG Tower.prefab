@@ -1092,7 +1092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.1
   damage: 8
-  speed: 8
+  speed: 4
   barrelExit: {fileID: 2761502381105484746}
   hitMarker: {fileID: 3096887676017900699, guid: 760645cec5d15ff458cff07a027a4936, type: 3}
   muzzleFlash: {fileID: 1668266075837510865, guid: 53ca4fcde24d6944bbdfb1a2d82766c7, type: 3}

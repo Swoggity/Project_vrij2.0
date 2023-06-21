@@ -1762,7 +1762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6056640937141273164, guid: 6ea247fcaef42154bb265c8c4707ba7c, type: 3}
       propertyPath: damageAmount
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6056640937449083836, guid: 6ea247fcaef42154bb265c8c4707ba7c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3626,9 +3626,17 @@ PrefabInstance:
       propertyPath: fireRate
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2852616364312708035, guid: d843dc70296792e49bc1b6e11cbb03cb, type: 3}
+      propertyPath: cooldownTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2852616364312708092, guid: d843dc70296792e49bc1b6e11cbb03cb, type: 3}
       propertyPath: rightLimit
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2852616364312708092, guid: d843dc70296792e49bc1b6e11cbb03cb, type: 3}
+      propertyPath: moveSpeedBackMod
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2852616364312708093, guid: d843dc70296792e49bc1b6e11cbb03cb, type: 3}
       propertyPath: m_Name
@@ -4538,7 +4546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyLevel: 0
-  timeBetweenWaves: 4
+  timeBetweenWaves: 5.5
   groupSize: 6
   waves:
   - enemySpawnData:

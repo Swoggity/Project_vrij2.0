@@ -70,6 +70,6 @@ public class TowerAbility : MonoBehaviour
     }
     private void playSound(AudioClip clip)
     {
-        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip, 0.1f, 1.0f, 1.0f);
+        Instantiate(Resources.Load<SFX>("SFX")).initSFX(clip, 0.1f, 0.5f, 1.0f);
     }
 }

@@ -26,15 +26,16 @@ public class EnemyFatCat : Enemy
                 canAttack = false;
                 attackTimer = 0f;
             }
-        }
-        if (!canAttack)
-        {
-            attackTimer += Time.deltaTime;
-            if (attackTimer >= attackRate)
+            if (!canAttack)
             {
-                canAttack = true;
+                attackTimer += Time.deltaTime;
+                if (attackTimer >= attackRate)
+                {
+                    canAttack = true;
+                }
             }
         }
+        
         DetectObstacle();
         playerPosition = playerObject.transform.position;
     }
@@ -46,7 +47,7 @@ public class EnemyFatCat : Enemy
             isObstacleDetected = false;
             return;
         }
-        if (transform.position.x <= playerPosition.x + adjustedDetectionDistance)
+        if (transform.position.x <= playerPosition.x + adjustedDetectionDistance - 0.5f)
         {
             isObstacleDetected = true;
         }
@@ -57,17 +58,17 @@ public class EnemyFatCat : Enemy
     }
     private void AttackPlayer()
     {
-        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(new Vector3(playerPosition.x + XOffset, playerPosition.y, playerPosition.z), attackRange, playerLayerMask);
+        co.loseScore(200, co.player.transform.position+new Vector3(0,4,0));
+        /*Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(new Vector3(playerPosition.x + XOffset, playerPosition.y, playerPosition.z), attackRange, playerLayerMask);
         foreach (Collider2D playerCollider in hitPlayer)
         {
-            IDamageable player = playerCollider.GetComponent<IDamageable>();
-            if (player != null)
+            if (playerCollider.gameObject.GetComponent<PlayerShoot>() != null)
             {
                 //Code to lose points here
-                co.loseScore(100, playerPosition);
+                co.loseScore(10, playerPosition);
                 Debug.Log(this.name + " Is attacking");
             }
-        }
+        }*/
     }
 
 }

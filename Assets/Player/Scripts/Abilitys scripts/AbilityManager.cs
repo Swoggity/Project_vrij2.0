@@ -75,7 +75,7 @@ public class AbilityManager : MonoBehaviour
     private void Update()
     {
         // Check for key presses to trigger abilities
-        if (co.isGamePaused() || co.becomeAlly) return;
+        if (co.isGamePaused() || co.becomeAlly || Input.GetKey(KeyCode.Space)) return;
 
         for (int i = 0; i < abilities.Length; i++)
         {

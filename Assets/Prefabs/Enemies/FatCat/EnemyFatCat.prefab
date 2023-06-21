@@ -578,7 +578,7 @@ MonoBehaviour:
   attackRate: 2
   attackRange: 0
   XOffset: 0
-  attackTimer: 0
+  attackTimer: 2
   canAttack: 0
   playerLayerMask:
     serializedVersion: 2

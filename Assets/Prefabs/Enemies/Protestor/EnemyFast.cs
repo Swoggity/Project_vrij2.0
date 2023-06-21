@@ -26,15 +26,16 @@ public class EnemyFast : Enemy
                 canAttack = false;
                 attackTimer = 0f;
             }
-        }
-        if (!canAttack)
-        {
-            attackTimer += Time.deltaTime;
-            if (attackTimer >= attackRate)
+            if (!canAttack)
             {
-                canAttack = true;
+                attackTimer += Time.deltaTime;
+                if (attackTimer >= attackRate)
+                {
+                    canAttack = true;
+                }
             }
         }
+        
         DetectObstacle();
         playerPosition = playerObject.transform.position;
     }
@@ -46,9 +47,10 @@ public class EnemyFast : Enemy
             isObstacleDetected = false;
             return;
         }
-        if (transform.position.x <= playerPosition.x + adjustedDetectionDistance)
+        if (transform.position.x <= playerPosition.x + adjustedDetectionDistance - 0.5f)
         {
             isObstacleDetected = true;
+            if (transform.position.x < playerPosition.x-5) Destroy(gameObject);
         }
         else if (transform.position.x >= playerPosition.x + adjustedDetectionDistance + 0.7f)
         {
@@ -57,17 +59,17 @@ public class EnemyFast : Enemy
     }
     private void AttackPlayer()
     {
-        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(new Vector3(playerPosition.x + XOffset, playerPosition.y, playerPosition.z), attackRange, playerLayerMask);
+        co.loseScore(10, co.player.transform.position + new Vector3(0, 4, 0));
+        /*Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(new Vector3(playerPosition.x + XOffset, playerPosition.y, playerPosition.z), attackRange, playerLayerMask);
         foreach (Collider2D playerCollider in hitPlayer)
         {
-            IDamageable player = playerCollider.GetComponent<IDamageable>();
-            if (player != null)
+            if (playerCollider.gameObject.GetComponent<PlayerShoot>() != null)
             {
                 //Code to lose points here
                 co.loseScore(10, playerPosition);
                 Debug.Log(this.name + " Is attacking");
             }
-        }
+        }*/
     }
 
     private void doVoiceline()
