@@ -81,6 +81,7 @@ public class CO : MonoBehaviour
                 StartCoroutine(StartMission());
             }
         }
+        if (Input.GetKeyDown(KeyCode.P) && MissionCounter < 208) MissionCounter = 208;
         if (scoreMulti > 1.0f)
         {
             scoreMulti -= Time.deltaTime*0.6f;
